@@ -1,5 +1,8 @@
+import React from "react";
+import HomePage from "./page/HomePage";
+
 function App() {
-  return <div className="App">안녕 나는 WAKE_UP 지니</div>;
+  return <HomePage />;
 }
 
 export default App;
