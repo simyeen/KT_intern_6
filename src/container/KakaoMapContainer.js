@@ -1,20 +1,29 @@
+/*global kakao*/
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const KakaoMapContainer = () => {
+  const { kakao } = window;
   let localstream;
 
   const kakaoMapInit = () => {
     var container = document.getElementById("map");
     var options = {
-      center: new window.kakao.maps.LatLng(
-        37.365264512305174,
-        127.10676860117488
-      ),
+      center: new kakao.maps.LatLng(37.359775085276, 127.11468651854),
       level: 3,
     };
 
-    let map = new window.kakao.maps.Map(container, options);
+    let map = new kakao.maps.Map(container, options);
+
+    let markerPosition = new kakao.maps.LatLng(
+      37.359775085276,
+      127.11468651854
+    );
+    let marker = new kakao.maps.Marker({
+      position: markerPosition,
+    });
+
+    marker.setMap(map);
   };
 
   const vedioInit = () => {
@@ -52,13 +61,13 @@ const KakaoMapContainer = () => {
 
   useEffect(() => {
     kakaoMapInit();
-    vedioInit();
+    // vedioInit();
   }, []);
 
   return (
     <>
       <KakaoMapContainerBlock>
-        <Video />
+        {/* <Video /> */}
         <div id="map" style={{ width: "500px", height: "400px" }} />
       </KakaoMapContainerBlock>
       <div>
