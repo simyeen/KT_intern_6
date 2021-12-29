@@ -47,6 +47,7 @@ const KakaoMapContainer = () => {
     video.pause();
     video.src = "";
     localstream.getTracks()[0].stop();
+    // video.style.display = "none";
   };
 
   useEffect(() => {
