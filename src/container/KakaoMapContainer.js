@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const KakaoMapContainer = () => {
+  let localstream;
+
   const kakaoMapInit = () => {
     var container = document.getElementById("map");
     var options = {
@@ -16,8 +18,6 @@ const KakaoMapContainer = () => {
   };
 
   const vedioInit = () => {
-    let localstream;
-
     navigator.getUserMedia =
       navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
@@ -42,17 +42,41 @@ const KakaoMapContainer = () => {
     }
   };
 
+  const onClick = () => {
+    let video = document.querySelector("video");
+    video.pause();
+    video.src = "";
+    localstream.getTracks()[0].stop();
+  };
+
   useEffect(() => {
     kakaoMapInit();
     vedioInit();
   }, []);
 
   return (
-    <KakaoMapContainerBlock>
-      <Video />
-      <div> 비디오 </div>
-      <div id="map" style={{ width: "500px", height: "400px" }} />
-    </KakaoMapContainerBlock>
+    <>
+      <KakaoMapContainerBlock>
+        <Video />
+        <div id="map" style={{ width: "500px", height: "400px" }} />
+      </KakaoMapContainerBlock>
+      <div>
+        <button
+          onClick={() => {
+            vedioInit();
+          }}
+        >
+          비디어 켜기버튼
+        </button>
+        <button
+          onClick={() => {
+            onClick();
+          }}
+        >
+          비디어 끄기버튼
+        </button>
+      </div>
+    </>
   );
 };
 
