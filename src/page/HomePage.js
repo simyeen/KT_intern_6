@@ -6,7 +6,7 @@ import VedioContainer from "../container/VedioContainer";
 const HomePage = () => {
   return (
     <Container>
-      {/* <VedioContainer /> */}
+      <VedioContainer />
       <KakaoMapContainer />
     </Container>
   );
