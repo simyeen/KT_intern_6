@@ -1,91 +1,101 @@
 /*global kakao*/
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import haversine from "haversine-distance";
 
 const KakaoMapContainer = () => {
   const { kakao } = window;
-  let localstream;
+
+  const a = { latitude: 37.8136, longitude: 144.9631 };
+  const b = { latitude: 33.865, longitude: 151.2094 };
+
+  console.log(haversine(a, b) / 1000); // 714504.18 (in meters)
 
   const kakaoMapInit = () => {
-    var container = document.getElementById("map");
-    var options = {
-      center: new kakao.maps.LatLng(37.359775085276, 127.11468651854),
+    let current_y = 37.359775085276;
+    let current_x = 127.11468651854;
+    let current_position = { lat: current_y, lng: current_x };
+
+    let mapContainer = document.getElementById("map");
+    let mapOption = {
+      center: new kakao.maps.LatLng(current_y, current_x),
       level: 3,
     };
 
-    let map = new kakao.maps.Map(container, options);
+    let map = new kakao.maps.Map(mapContainer, mapOption);
 
-    let markerPosition = new kakao.maps.LatLng(
-      37.359775085276,
-      127.11468651854
-    );
+    let markerPosition = new kakao.maps.LatLng(current_y, current_x);
     let marker = new kakao.maps.Marker({
       position: markerPosition,
     });
 
     marker.setMap(map);
-  };
 
-  const vedioInit = () => {
-    navigator.getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
+    let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+    let ps = new kakao.maps.services.Places();
 
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia(
-        { audio: false, video: true },
+    console.log("ps", ps);
+    ps.keywordSearch("졸음 쉼터", placesSearchCB);
 
-        function (stream) {
-          let video = document.querySelector("video");
-          video.srcObject = stream;
-          localstream = stream;
-          video.onloadedmetadata = function (e) {
-            video.play();
+    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    function placesSearchCB(data, status, pagination) {
+      if (status === kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        let bounds = new kakao.maps.LatLngBounds();
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          displayMarker(data[i]);
+
+          let data_position = {
+            lat: parseFloat(data[i].y),
+            lng: parseFloat(data[i].x),
           };
-        },
 
-        function (err) {}
-      );
-    } else {
+          const distance = haversine(current_position, data_position) / 1000;
+
+          if (distance > 20) {
+            continue;
+          }
+
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+      }
     }
-  };
 
-  const onClick = () => {
-    let video = document.querySelector("video");
-    video.pause();
-    video.src = "";
-    localstream.getTracks()[0].stop();
-    // video.style.display = "none";
+    // 지도에 마커를 표시하는 함수입니다
+    function displayMarker(place) {
+      // 마커를 생성하고 지도에 표시합니다
+      let marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x),
+      });
+
+      // 마커에 클릭이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, "click", function () {
+        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+        infowindow.setContent(
+          '<div style="padding:5px;font-size:12px;">' +
+            place.place_name +
+            "</div>"
+        );
+        infowindow.open(map, marker);
+      });
+    }
   };
 
   useEffect(() => {
     kakaoMapInit();
-    // vedioInit();
   }, []);
 
   return (
     <>
       <KakaoMapContainerBlock>
-        {/* <Video /> */}
         <div id="map" style={{ width: "500px", height: "400px" }} />
       </KakaoMapContainerBlock>
-      <div>
-        <button
-          onClick={() => {
-            vedioInit();
-          }}
-        >
-          비디어 켜기버튼
-        </button>
-        <button
-          onClick={() => {
-            onClick();
-          }}
-        >
-          비디어 끄기버튼
-        </button>
-      </div>
     </>
   );
 };
@@ -94,9 +104,4 @@ export default KakaoMapContainer;
 
 const KakaoMapContainerBlock = styled.div`
   display: flex;
-`;
-
-const Video = styled.video`
-  width: 500px;
-  height: 400px;
 `;
