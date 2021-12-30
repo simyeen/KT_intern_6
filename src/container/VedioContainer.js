@@ -70,10 +70,10 @@ const VedioBlock = styled.div`
   display: flex;
   flex-direction: column;
   width: 400px;
-  margin: 0;
 `;
 
 const Video = styled.video`
   width: 500px;
   height: 400px;
+  margin-right: 100px;
 `;

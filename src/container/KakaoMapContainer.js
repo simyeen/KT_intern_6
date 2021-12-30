@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import haversine from "haversine-distance";
 
@@ -9,6 +9,8 @@ const KakaoMapContainer = () => {
     index: 0,
   });
 
+  const dataList = useState([]);
+
   const kakaoMapInit = () => {
     let current_y = 37.359775085276;
     let current_x = 127.11468651854;
@@ -17,7 +19,7 @@ const KakaoMapContainer = () => {
     let mapContainer = document.getElementById("map");
     let mapOption = {
       center: new kakao.maps.LatLng(current_y, current_x),
-      level: 3,
+      level: 5,
     };
     let map = new kakao.maps.Map(mapContainer, mapOption);
 
@@ -42,7 +44,7 @@ const KakaoMapContainer = () => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         let bounds = new kakao.maps.LatLngBounds();
-        console.log(data);
+        // console.log(data);
         for (let i = 0; i < data.length; i++) {
           let data_position = {
             lat: parseFloat(data[i].y),
@@ -90,6 +92,7 @@ const KakaoMapContainer = () => {
             place.place_name +
             "</div>"
         );
+        console.log("info", infowindow);
         infowindow.open(map, marker);
       });
     }
@@ -102,7 +105,7 @@ const KakaoMapContainer = () => {
   return (
     <>
       <KakaoMapContainerBlock>
-        <div id="map" style={{ width: "500px", height: "400px" }} />
+        <div id="map" style={{ width: "600px", height: "400px" }} />
       </KakaoMapContainerBlock>
     </>
   );
@@ -111,5 +114,5 @@ const KakaoMapContainer = () => {
 export default KakaoMapContainer;
 
 const KakaoMapContainerBlock = styled.div`
-  display: flex;
+  /* display: flex; */
 `;
