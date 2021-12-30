@@ -24,7 +24,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Wake up genie</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -33,6 +33,22 @@
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f5c21470a2a1fd83bbae45b685b323c7&libraries=services"
     ></script>
+
+    <a id="navi" href="#" onclick="navi();">
+      <img
+        src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png"
+      />
+    </a>
+    <script type="text/javascript">
+      function navi() {
+        Kakao.Navi.start({
+          name: "현대백화점 판교점",
+          x: 127.11205203011632,
+          y: 37.39279717586919,
+          coordType: "wgs84",
+        });
+      }
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

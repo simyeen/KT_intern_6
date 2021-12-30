@@ -1,15 +1,13 @@
-/*global kakao*/
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import haversine from "haversine-distance";
 
 const KakaoMapContainer = () => {
   const { kakao } = window;
-
-  const a = { latitude: 37.8136, longitude: 144.9631 };
-  const b = { latitude: 33.865, longitude: 151.2094 };
-
-  console.log(haversine(a, b) / 1000); // 714504.18 (in meters)
+  const closestPosition = useRef({
+    distance: 1e9,
+    index: 0,
+  });
 
   const kakaoMapInit = () => {
     let current_y = 37.359775085276;
@@ -21,7 +19,6 @@ const KakaoMapContainer = () => {
       center: new kakao.maps.LatLng(current_y, current_x),
       level: 3,
     };
-
     let map = new kakao.maps.Map(mapContainer, mapOption);
 
     let markerPosition = new kakao.maps.LatLng(current_y, current_x);
@@ -34,9 +31,11 @@ const KakaoMapContainer = () => {
     let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
     let ps = new kakao.maps.services.Places();
 
-    console.log("ps", ps);
     ps.keywordSearch("졸음 쉼터", placesSearchCB);
 
+    // ps.categorySearch("PK6", placesSearchCB, {
+    //   location: new kakao.maps.LatLng(current_y, current_x),
+    // });
     // 키워드 검색 완료 시 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
@@ -45,8 +44,6 @@ const KakaoMapContainer = () => {
         let bounds = new kakao.maps.LatLngBounds();
         console.log(data);
         for (let i = 0; i < data.length; i++) {
-          displayMarker(data[i]);
-
           let data_position = {
             lat: parseFloat(data[i].y),
             lng: parseFloat(data[i].x),
@@ -54,14 +51,25 @@ const KakaoMapContainer = () => {
 
           const distance = haversine(current_position, data_position) / 1000;
 
-          if (distance > 20) {
+          if (distance >= 20) {
             continue;
+          } else if (distance <= closestPosition.current.distance) {
+            closestPosition.current = {
+              ...closestPosition.current,
+              distance,
+              index: i,
+            };
+            // console.log(cslosestPosition.current);
           }
-
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        let index = closestPosition.current.index;
+        console.log(data[closestPosition.current.index]);
+
+        displayMarker(data[index]);
+        // bounds.extend(new kakao.maps.LatLng(data[index].y, data[index].x));
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
         map.setBounds(bounds);
       }
     }
