@@ -7,7 +7,7 @@ import i from "../asset/KT_character.png";
 const VedioContainer = () => {
   let localstream;
 
-  const [isVideoOn, setIsVideoOn] = useState(true);
+  const [isVideoOn, setIsVideoOn] = useState(false);
 
   const init = () => {
     navigator.getUserMedia =
@@ -43,10 +43,6 @@ const VedioContainer = () => {
     // localstream.getTracks()[0].stop();
     setIsVideoOn(false);
   };
-
-  useEffect(() => {
-    init();
-  }, []);
 
   return (
     <VedioBlock>
