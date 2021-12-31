@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import haversine from "haversine-distance";
-import axios from "axios";
+import speakDestination from "../util/speakDestination";
+import KaKaoMapPresenter from "../presenter/KaKaoMapPresenter";
 
 const KakaoMapContainer = () => {
   const { kakao } = window;
@@ -9,6 +10,7 @@ const KakaoMapContainer = () => {
     distance: 1e9,
     index: 0,
   });
+  const [minAddressState, setMinAddressState] = useState("");
 
   const [dataList, setDataList] = useState([]);
 
@@ -17,12 +19,12 @@ const KakaoMapContainer = () => {
     let current_x = 127.11468651854;
     let current_position = { lat: current_y, lng: current_x };
 
-    let mapContainer = document.getElementById("map");
+    let $mapContainer = document.getElementById("map");
     let mapOption = {
       center: new kakao.maps.LatLng(current_y, current_x),
       level: 5,
     };
-    let map = new kakao.maps.Map(mapContainer, mapOption);
+    let map = new kakao.maps.Map($mapContainer, mapOption);
 
     let markerPosition = new kakao.maps.LatLng(current_y, current_x);
     let marker = new kakao.maps.Marker({
@@ -77,8 +79,9 @@ const KakaoMapContainer = () => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
         map.setBounds(bounds);
 
-        const minAddress = `가장 가까운 곳은 ${data[index].address_name} 입니다.`;
-        postSpeak(minAddress);
+        const minAddress = data[index].address_name;
+        setMinAddressState(minAddress);
+        speakDestination(minAddress);
       }
     }
 
@@ -104,35 +107,6 @@ const KakaoMapContainer = () => {
     }
   };
 
-  const postSpeak = async (text) => {
-    console.log(text);
-    const xmlData = `<speak>${text}</speak>`;
-    try {
-      const { data } = await axios.post(
-        "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",
-        xmlData,
-        {
-          headers: {
-            "Content-Type": "application/xml",
-            Authorization: `KakaoAK db3bb37a8a4e03a522400cc0a94ba0b7`,
-          },
-          responseType: "arraybuffer",
-        }
-      );
-
-      const context = new AudioContext();
-      context.decodeAudioData(data, (buffer) => {
-        console.log("음성 시작");
-        const source = context.createBufferSource();
-        source.buffer = buffer;
-        source.connect(context.destination);
-        source.start(0);
-      });
-    } catch (e) {
-      console.error(e.message);
-    }
-  };
-
   useEffect(() => {
     kakaoMapInit();
   }, []);
@@ -141,13 +115,12 @@ const KakaoMapContainer = () => {
     <>
       <KakaoMapContainerBlock>
         <div id="map" style={{ width: "600px", height: "400px" }} />
-        {dataList.map((data, index) => {
-          const { address_name, road_address_name } = data;
-          return <li key={index}>{address_name}</li>;
-        })}
+        {dataList.map((data, index) => (
+          <KaKaoMapPresenter {...{ data }} key={index} />
+        ))}
         <button
           onClick={() => {
-            postSpeak("다시듣기 블라블라");
+            speakDestination(minAddressState);
           }}
         >
           다시 듣기
@@ -162,5 +135,3 @@ export default KakaoMapContainer;
 const KakaoMapContainerBlock = styled.div`
   /* display: flex; */
 `;
-
-const DataCotainer = styled.div``;

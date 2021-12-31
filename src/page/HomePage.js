@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Form from "../common/Form";
 import KakaoMapContainer from "../container/KakaoMapContainer";
 import VedioContainer from "../container/VedioContainer";
-import axios from "axios";
 
 const HomePage = () => {
   return (

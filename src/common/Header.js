@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Padding from "./Padding";
 import Text from "./Text";
 import Responsive from "./Responsive";
-import { NavLink } from "react-router-dom";
 import color from "./color";
 
 const HeaderBlock = styled.div`
@@ -15,13 +14,14 @@ const HeaderBlock = styled.div`
 `;
 
 const Wrapper = styled(Responsive)`
-  height: 8rem;
+  height: 6rem;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Cotainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Category = styled.div`
@@ -45,7 +45,6 @@ const Category = styled.div`
 const TitleDiv = styled.div`
   display: flex;
   align-items: center;
-  margin: 10px 0px;
 `;
 
 const Img = styled.img`
@@ -66,7 +65,7 @@ const Header = ({ categories, setPostList }) => {
             </Text>
             <Img src={process.env.PUBLIC_URL + "/favicon.ico"} />
           </TitleDiv>
-
+          <div />
           <Cotainer>
             {categories.map((c, index) => (
               <Category
@@ -82,7 +81,7 @@ const Header = ({ categories, setPostList }) => {
           </Cotainer>
         </Wrapper>
       </HeaderBlock>
-      <Padding height={8} />
+      <Padding height={6} />
     </>
   );
 };

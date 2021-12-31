@@ -38,9 +38,11 @@ const VedioContainer = () => {
 
   const onClick = () => {
     let video = document.querySelector("video");
+    if (!isVideoOn) {
+      return;
+    }
     video.pause();
     video.src = "";
-    // localstream.getTracks()[0].stop();
     setIsVideoOn(false);
   };
 
