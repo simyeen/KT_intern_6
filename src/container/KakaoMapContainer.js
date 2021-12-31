@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import haversine from "haversine-distance";
+import axios from "axios";
 
 const KakaoMapContainer = () => {
   const { kakao } = window;
@@ -71,9 +72,13 @@ const KakaoMapContainer = () => {
         console.log(data[closestPosition.current.index]);
 
         displayMarker(data[index]);
+
         // bounds.extend(new kakao.maps.LatLng(data[index].y, data[index].x));
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
         map.setBounds(bounds);
+
+        const minAddress = `가장 가까운 곳은 ${data[index].address_name} 입니다.`;
+        postSpeak(minAddress);
       }
     }
 
@@ -99,6 +104,35 @@ const KakaoMapContainer = () => {
     }
   };
 
+  const postSpeak = async (text) => {
+    console.log(text);
+    const xmlData = `<speak>${text}</speak>`;
+    try {
+      const { data } = await axios.post(
+        "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",
+        xmlData,
+        {
+          headers: {
+            "Content-Type": "application/xml",
+            Authorization: `KakaoAK db3bb37a8a4e03a522400cc0a94ba0b7`,
+          },
+          responseType: "arraybuffer",
+        }
+      );
+
+      const context = new AudioContext();
+      context.decodeAudioData(data, (buffer) => {
+        console.log("음성 시작");
+        const source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.start(0);
+      });
+    } catch (e) {
+      console.error(e.message);
+    }
+  };
+
   useEffect(() => {
     kakaoMapInit();
   }, []);
@@ -111,6 +145,13 @@ const KakaoMapContainer = () => {
           const { address_name, road_address_name } = data;
           return <li key={index}>{address_name}</li>;
         })}
+        <button
+          onClick={() => {
+            postSpeak("다시듣기 블라블라");
+          }}
+        >
+          다시 듣기
+        </button>
       </KakaoMapContainerBlock>
     </>
   );
