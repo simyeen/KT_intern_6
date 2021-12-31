@@ -20,6 +20,7 @@ const color = {
   green5: "rgba(116, 188, 32, 0.05)",
   logo: "#4b93d3",
   clude: "#05aff0",
+  darkGray: "#535657",
 };
 
 export default color;

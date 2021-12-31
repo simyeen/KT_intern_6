@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import color from "../../lib/styles/color";
+import color from "./color";
 
 const buttonStyle = css`
   display: flex;
@@ -8,13 +8,13 @@ const buttonStyle = css`
   align-items: center;
   width: 150px;
   height: 60px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   outline: none;
   border: none;
   border-radius: 8px;
-  color: ${color.black};
+  color: ${color.white};
 
-  background: ${color.orange};
+  background: ${color.darkGray};
   font-weight: 500;
   font-stretch: normal;
   line-height: 1.4;
