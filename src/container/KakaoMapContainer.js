@@ -9,7 +9,7 @@ const KakaoMapContainer = () => {
     index: 0,
   });
 
-  const dataList = useState([]);
+  const [dataList, setDataList] = useState([]);
 
   const kakaoMapInit = () => {
     let current_y = 37.359775085276;
@@ -44,7 +44,8 @@ const KakaoMapContainer = () => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         let bounds = new kakao.maps.LatLngBounds();
-        // console.log(data);
+
+        setDataList(data);
         for (let i = 0; i < data.length; i++) {
           let data_position = {
             lat: parseFloat(data[i].y),
@@ -106,6 +107,10 @@ const KakaoMapContainer = () => {
     <>
       <KakaoMapContainerBlock>
         <div id="map" style={{ width: "600px", height: "400px" }} />
+        {dataList.map((data, index) => {
+          const { address_name, road_address_name } = data;
+          return <li key={index}>{address_name}</li>;
+        })}
       </KakaoMapContainerBlock>
     </>
   );
@@ -116,3 +121,5 @@ export default KakaoMapContainer;
 const KakaoMapContainerBlock = styled.div`
   /* display: flex; */
 `;
+
+const DataCotainer = styled.div``;

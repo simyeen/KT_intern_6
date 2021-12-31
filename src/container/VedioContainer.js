@@ -96,7 +96,6 @@ const VedioBlock = styled.div`
 const Video = styled.video`
   width: 500px;
   height: 400px;
-  margin-right: 100px;
 `;
 
 const Img = styled.img`
