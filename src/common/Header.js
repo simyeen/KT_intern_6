@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
 import Padding from "./Padding";
 import Text from "./Text";
 import Responsive from "./Responsive";
@@ -9,12 +9,12 @@ const HeaderBlock = styled.div`
   position: fixed;
   z-index: 10;
   width: 100%;
-  background: white;
+  background: ${color.gray[50]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
 const Wrapper = styled(Responsive)`
-  height: 6rem;
+  height: 5rem;
   display: flex;
   justify-content: space-between;
 `;
@@ -25,21 +25,24 @@ const Cotainer = styled.div`
 `;
 
 const Category = styled.div`
-  display: inline;
   margin-right: 20px;
-  padding-bottom: 0.3rem;
-  font-size: 1.5rem;
-  font-weight: 500;
+  opacity: 0.3;
 
   cursor: pointer;
 
   &:hover {
-    font-weight: 700;
+    opacity: 1;
+    font-weight: 1000;
   }
-  &.active {
-    color: ${color.orange};
-    border-bottom: 2px solid ${color.orange};
-  }
+
+  ${(props) =>
+    props.active &&
+    css`
+      color: ${color.KT_blue};
+      border-bottom: 2px solid ${color.KT_blue};
+      font-weight: 1000;
+      opacity: 1;
+    `}
 `;
 
 const TitleDiv = styled.div`
@@ -48,40 +51,49 @@ const TitleDiv = styled.div`
 `;
 
 const Img = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-left: 5px;
-  margin-bottom: 10px;
+  width: 68px;
+  height: 68px;
+  margin-right: 10px;
+  margin-bottom: 5px;
 `;
 
 const Header = ({ categories, setPostList }) => {
+  const [selectCategory, setSelectCategory] = useState("홈");
+  const onSelect = (category) => {
+    setSelectCategory(category);
+    console.log(selectCategory);
+  };
+
   return (
     <>
       <HeaderBlock>
         <Wrapper>
           <TitleDiv>
-            <Text fontSize={32} fontWeight={1000}>
-              Wake up 지니
-            </Text>
             <Img src={process.env.PUBLIC_URL + "/favicon.ico"} />
+            <Text fontSize={30} fontWeight={1000}>
+              WAKE UP GENIE
+            </Text>
           </TitleDiv>
           <div />
           <Cotainer>
             {categories.map((c, index) => (
               <Category
-                exact={c.content === "홈"}
                 key={c.content}
                 onClick={() => {
                   setPostList(index);
+                  onSelect(c.content);
                 }}
+                active={selectCategory === c.content}
               >
-                {c.content}
+                <Text hover fontSize={24}>
+                  {c.content}
+                </Text>
               </Category>
             ))}
           </Cotainer>
         </Wrapper>
       </HeaderBlock>
-      <Padding height={6} />
+      <Padding height={5} />
     </>
   );
 };

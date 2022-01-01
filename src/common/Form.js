@@ -4,8 +4,8 @@ import color from "./color";
 
 const StyledForm = styled.div`
   max-width: 100%;
-  padding: 1.6rem 3.2rem;
-  background: ${color.white};
+  padding: 1.6rem 1.6rem;
+  background: ${color.gray[50]};
   display: flex;
   flex-direction: column;
 

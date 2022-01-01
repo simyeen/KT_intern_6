@@ -47,36 +47,44 @@ const VedioContainer = () => {
 
   return (
     <VedioBlock>
-      {isVideoOn && <Video />}
+      {isVideoOn && (
+        <VideoWrapper>
+          <Video />
+        </VideoWrapper>
+      )}
       {!isVideoOn && <Img src={require("../asset/KT_character.png")} />}
       <VideoCotainer>
-        <Button
-          sx={{
-            fontSize: "2.2rem",
-            fontWeight: "700",
-            backgroundColor: `${color.darkGray}`,
-            marginRight: "50px",
-          }}
-          variant="contained"
-          onClick={() => {
-            init();
-          }}
-        >
-          켜키
-        </Button>
-        <Button
-          sx={{
-            fontSize: "2.2rem",
-            fontWeight: "700",
-            backgroundColor: `${color.darkGray}`,
-          }}
-          variant="contained"
-          onClick={() => {
-            onClick();
-          }}
-        >
-          끄기
-        </Button>
+        <ButtonDiv>
+          <Button
+            sx={{
+              fontSize: "2.2rem",
+              fontWeight: "700",
+              backgroundColor: `${color.darkGray}`,
+              marginRight: "50px",
+              borderRadius: "8px",
+            }}
+            variant="contained"
+            onClick={() => {
+              init();
+            }}
+          >
+            켜키
+          </Button>
+          <Button
+            sx={{
+              fontSize: "2.2rem",
+              fontWeight: "700",
+              backgroundColor: `${color.darkGray}`,
+              borderRadius: "8px",
+            }}
+            variant="contained"
+            onClick={() => {
+              onClick();
+            }}
+          >
+            끄기
+          </Button>
+        </ButtonDiv>
       </VideoCotainer>
     </VedioBlock>
   );
@@ -87,21 +95,32 @@ export default VedioContainer;
 const VedioBlock = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+`;
+
+const VideoWrapper = styled.div`
+  width: 600px;
+  height: 428px;
+  border-radius: 15px;
 `;
 
 const Video = styled.video`
-  width: 500px;
-  height: 400px;
+  width: 600px;
+  height: 428px;
+  border-radius: 10px;
 `;
 
 const Img = styled.img`
-  width: 500px;
-  height: 400px;
-  margin-right: 100px;
+  border-radius: 15px;
 `;
 
 const VideoCotainer = styled.div`
   display: flex;
+  flex-direction: column;
+`;
+
+const ButtonDiv = styled.div`
+  display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  padding: 16px 16px;
 `;

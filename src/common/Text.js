@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import color from "./color";
 
 const StyledText = styled.p`
   margin: 0;
@@ -51,7 +52,8 @@ const StyledText = styled.p`
     props.hover &&
     css`
       &:hover {
-        font-weight: 550;
+        color: ${color.KT_blue};
+        font-weight: 1000;
         cursor: pointer;
       }
     `}

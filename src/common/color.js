@@ -21,6 +21,7 @@ const color = {
   logo: "#4b93d3",
   clude: "#05aff0",
   darkGray: "#535657",
+  KT_blue: "#1478ff",
 };
 
 export default color;

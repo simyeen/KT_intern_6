@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import haversine from "haversine-distance";
 import speakDestination from "../util/speakDestination";
@@ -6,11 +6,12 @@ import KaKaoMapPresenter from "../presenter/KaKaoMapPresenter";
 import { KT_CENTER, RANGE } from "../common/const";
 import { Button } from "@mui/material";
 import displayMarker from "../util/displayMarker";
+import color from "../common/color";
 
 const KakaoMapContainer = ({ isEventOn }) => {
   console.log(isEventOn);
   const { kakao } = window;
-  const [closestPlace, setClosestPlace] = useState({});
+  const [closestPlace, setClosestPlace] = useState("");
 
   let map;
   let ps = new kakao.maps.services.Places();
@@ -20,14 +21,10 @@ const KakaoMapContainer = ({ isEventOn }) => {
     let $mapContainer = document.getElementById("map");
     let mapOption = {
       center: new kakao.maps.LatLng(KT_CENTER.Y, KT_CENTER.X),
-      level: 5,
+      level: 3,
     };
     map = new kakao.maps.Map($mapContainer, mapOption);
-    let markerPosition = new kakao.maps.LatLng(KT_CENTER.Y, KT_CENTER.X);
-    let marker = new kakao.maps.Marker({
-      position: markerPosition,
-    });
-    marker.setMap(map);
+
     displayMarker({ y: KT_CENTER.Y, x: KT_CENTER.X }, map);
   };
 
@@ -51,7 +48,10 @@ const KakaoMapContainer = ({ isEventOn }) => {
       displayMarker(data[minIndex], map);
       map.setBounds(bounds);
       setClosestPlace(data[minIndex]);
-      speakDestination(data[minIndex].address_name);
+      // speakDestination({
+      //   text: data[minIndex].address_name,
+      //   replay: isEventOn,
+      // });
     }
   }
 
@@ -75,27 +75,46 @@ const KakaoMapContainer = ({ isEventOn }) => {
   return (
     <>
       <KakaoMapContainerBlock>
-        <div id="map" style={{ width: "600px", height: "400px" }} />
+        <div
+          id="map"
+          style={{ width: "700px", height: "428px", borderRadius: "25px" }}
+        />
         {closestPlace && <KaKaoMapPresenter {...{ closestPlace }} />}
 
-        {closestPlace && (
-          <>
+        {
+          <ButtonContainer>
             <Button
+              sx={{
+                fontSize: "2.2rem",
+                fontWeight: "700",
+                backgroundColor: `${color.darkGray}`,
+                marginRight: "50px",
+                borderRadius: "8px",
+              }}
+              variant="contained"
               onClick={() => {
-                speakDestination();
+                // speakDestination({ text: closestPlace.address_name });
               }}
             >
               다시 듣기
             </Button>
             <Button
+              sx={{
+                fontSize: "2.2rem",
+                fontWeight: "700",
+                backgroundColor: `${color.darkGray}`,
+                marginRight: "50px",
+                borderRadius: "8px",
+              }}
+              variant="contained"
               onClick={() => {
                 reStart();
               }}
             >
               재요청
             </Button>
-          </>
-        )}
+          </ButtonContainer>
+        }
       </KakaoMapContainerBlock>
     </>
   );
@@ -105,4 +124,8 @@ export default KakaoMapContainer;
 
 const KakaoMapContainerBlock = styled.div`
   /* display: flex; */
+`;
+
+const ButtonContainer = styled.div`
+  padding: 16px 16px;
 `;
