@@ -21,7 +21,6 @@ const speakDestination = async ({ replay = false, text }) => {
 
     const context = new AudioContext();
     context.decodeAudioData(data, (buffer) => {
-      console.log("TTS");
       const source = context.createBufferSource();
       source.buffer = buffer;
       source.connect(context.destination);
