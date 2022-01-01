@@ -7,7 +7,8 @@ import { KT_CENTER, RANGE } from "../common/const";
 import { Button } from "@mui/material";
 import displayMarker from "../util/displayMarker";
 
-const KakaoMapContainer = () => {
+const KakaoMapContainer = ({ isEventOn }) => {
+  console.log(isEventOn);
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState({});
 
@@ -50,38 +51,51 @@ const KakaoMapContainer = () => {
       displayMarker(data[minIndex], map);
       map.setBounds(bounds);
       setClosestPlace(data[minIndex]);
-      speakDestination("minAddress");
+      speakDestination(data[minIndex].address_name);
     }
   }
 
-  const onClick = () => {
+  const reStart = () => {
     init();
     ps.keywordSearch("졸음 쉼터", placesSearchCB);
+    console.log("이벤트는", isEventOn);
   };
 
   useEffect(() => {
     init();
   }, []);
 
+  useEffect(() => {
+    if (!isEventOn) {
+      return;
+    }
+    reStart();
+  }, [isEventOn]);
+
   return (
     <>
       <KakaoMapContainerBlock>
         <div id="map" style={{ width: "600px", height: "400px" }} />
         {closestPlace && <KaKaoMapPresenter {...{ closestPlace }} />}
-        <Button
-          onClick={() => {
-            speakDestination(closestPlace.address_name);
-          }}
-        >
-          다시 듣기
-        </Button>
-        <Button
-          onClick={() => {
-            onClick();
-          }}
-        >
-          재요청
-        </Button>
+
+        {closestPlace && (
+          <>
+            <Button
+              onClick={() => {
+                speakDestination();
+              }}
+            >
+              다시 듣기
+            </Button>
+            <Button
+              onClick={() => {
+                reStart();
+              }}
+            >
+              재요청
+            </Button>
+          </>
+        )}
       </KakaoMapContainerBlock>
     </>
   );

@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Form from "../common/Form";
+import EventListener from "../container/EventListener";
 import KakaoMapContainer from "../container/KakaoMapContainer";
 import SliderContainer from "../container/SliderContainer";
 import VedioContainer from "../container/VedioContainer";
 
 const HomePage = () => {
+  const [isEventOn, setIsEventOn] = useState(false);
+
   return (
     <Wrapper>
       <Container>
         <VedioContainer />
-        <KakaoMapContainer />
+        <KakaoMapContainer {...{ isEventOn }} />
       </Container>
-      <SliderContainer />
+      {!isEventOn && <EventListener {...{ setIsEventOn }} />}
+      {/* <SliderContainer /> */}
     </Wrapper>
   );
 };

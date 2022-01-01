@@ -2,7 +2,7 @@ import axios from "axios";
 import { VOICE } from "../common/const";
 
 // 지도에서 얻어낸 가장 가까운 목적지를 음성으로 알려줍니다.
-const speakDestination = async ({ replay = false, text }) => {
+const speakDestination = async ({ init = false, replay = false, text }) => {
   let replayText = replay ? VOICE.REPLAY : "";
 
   const xmlData = `<speak>${replayText}. ${VOICE.WARNING} 가장 가까운 곳은 ${text} 입니다.</speak>`;
