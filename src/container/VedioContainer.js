@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import color from "../common/color";
-import i from "../asset/KT_character.png";
 
 const VedioContainer = () => {
   let localstream;

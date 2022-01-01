@@ -1,9 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
 import HeaderContainer from "./container/HeaderContainer";
 import InfoContainer from "./container/InfoContainer";
 import TeamContainer from "./container/TeamContainer";
 import HomePage from "./page/HomePage";
+
+import axios from "axios";
 
 function App() {
   const [postList, setPostList] = useState(0);
