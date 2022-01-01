@@ -17,7 +17,7 @@ export default class PlaceSearch {
     this.ps.keywordSearch("졸음 쉼터", this.placesSearchCB.bind(this));
   }
 
-  placesSearchCB(data, status, pagination) {
+  placesSearchCB(data, status) {
     if (status === this.kakao.maps.services.Status.OK) {
       let bounds = new this.kakao.maps.LatLngBounds();
 
@@ -50,6 +50,10 @@ export default class PlaceSearch {
       this.infowindow.open(this.map, marker);
     });
   }
+
+  getClosestData() {}
+
+  getDistance() {}
 }
 
 // function placesSearchCB(data, status, pagination) {

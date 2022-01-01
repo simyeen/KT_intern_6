@@ -1,8 +1,10 @@
 import axios from "axios";
 
 // 지도에서 얻어낸 가장 가까운 목적지를 음성으로 알려줍니다.
-const speakDestination = async (text) => {
-  const xmlData = `<speak>일어나세요 휴먼. 가장 가까운 곳은 ${text} 입니다.</speak>`;
+const speakDestination = async ({ replay = false, text }) => {
+  let replayText = replay ? "위치를 재 탐색합니다. 잠시만 기다려주세요" : "";
+
+  const xmlData = `<speak>${replayText}. 일어나세요 휴먼. 가장 가까운 곳은 ${text} 입니다.</speak>`;
   try {
     const { data } = await axios.post(
       "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",

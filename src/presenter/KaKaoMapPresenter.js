@@ -3,9 +3,13 @@ import styled from "styled-components";
 
 const KaKaoMapPresenterBlock = styled.div``;
 
+const Title = styled.div``;
+
+const row = styled.div``;
+
 const KaKaoMapPresenter = ({ data }) => {
-  const { address_name } = data;
-  console.log(data);
+  const { place_name, address_name, road_address_name } = data;
+
   return <KaKaoMapPresenterBlock>{address_name}</KaKaoMapPresenterBlock>;
 };
 
