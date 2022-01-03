@@ -48,10 +48,10 @@ const KakaoMapContainer = ({ isEventOn }) => {
       displayMarker(data[minIndex], map);
       map.setBounds(bounds);
       setClosestPlace(data[minIndex]);
-      // speakDestination({
-      //   text: data[minIndex].address_name,
-      //   replay: isEventOn,
-      // });
+      speakDestination({
+        text: data[minIndex].address_name,
+        replay: isEventOn,
+      });
     }
   }
 
@@ -93,26 +93,28 @@ const KakaoMapContainer = ({ isEventOn }) => {
               }}
               variant="contained"
               onClick={() => {
-                // speakDestination({ text: closestPlace.address_name });
+                speakDestination({ text: closestPlace.address_name });
               }}
             >
               다시 듣기
             </Button>
-            <Button
-              sx={{
-                fontSize: "2.2rem",
-                fontWeight: "700",
-                backgroundColor: `${color.darkGray}`,
-                marginRight: "50px",
-                borderRadius: "8px",
-              }}
-              variant="contained"
-              onClick={() => {
-                reStart();
-              }}
-            >
-              재요청
-            </Button>
+            {isEventOn && (
+              <Button
+                sx={{
+                  fontSize: "2.2rem",
+                  fontWeight: "700",
+                  backgroundColor: `${color.darkGray}`,
+                  marginRight: "50px",
+                  borderRadius: "8px",
+                }}
+                variant="contained"
+                onClick={() => {
+                  reStart();
+                }}
+              >
+                재요청
+              </Button>
+            )}
           </ButtonContainer>
         }
       </KakaoMapContainerBlock>

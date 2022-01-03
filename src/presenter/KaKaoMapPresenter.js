@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import speakDestination from "../util/speakDestination";
 
 const KaKaoMapPresenterBlock = styled.div`
   display: flex;

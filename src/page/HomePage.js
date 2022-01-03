@@ -10,12 +10,12 @@ const HomePage = () => {
   const [isEventOn, setIsEventOn] = useState(false);
 
   return (
-    <Wrapper>
+    <Wrapper id="나는 래퍼">
       <Container>
         <VedioContainer />
         <KakaoMapContainer {...{ isEventOn }} />
+        {!isEventOn && <EventListener {...{ setIsEventOn }} />}
       </Container>
-      {!isEventOn && <EventListener {...{ setIsEventOn }} />}
       {/* <SliderContainer /> */}
     </Wrapper>
   );
@@ -27,10 +27,14 @@ const Wrapper = styled.div`
   diplay: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  height: 100%;
 `;
 
 const Container = styled(Form)`
   diplay: flex;
   flex-direction: row;
   justify-content: space-between;
+  /* width: 100%; */
+  height: 100%;
 `;

@@ -9,8 +9,9 @@ const speakDestination = async ({ init = false, replay = false, text }) => {
 
   if (text === undefined) {
     xmlData = `<speak>아직 경로를 탐색하지 않았습니다.</speak>`;
+    // xmlData = `<speak>구구단을 외자 구구단을 외자 3 곱하기 7은 ?</speak>`;
   } else {
-    xmlData = `<speak>${replayText}. ${initText} 가장 가까운 곳은 ${text} 입니다.</speak>`;
+    xmlData = `<speak>일어나세요 휴먼 ${replayText}. ${initText} 가장 가까운 곳은 ${text} 입니다.</speak>`;
   }
 
   // const xmlData = `<speak><voice name="WOMAN_READ_CALM"> 지금은 여성 차분한 낭독체입니다.</voice></speak>`;
