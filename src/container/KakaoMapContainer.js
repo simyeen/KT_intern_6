@@ -41,12 +41,12 @@ const KakaoMapContainer = ({ isEventOn }) => {
 
         if (distance >= RANGE.MAX) continue;
         if (distance <= minDistance) minIndex = i;
-
-        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
       }
 
-      displayMarker(data[minIndex], map);
+      bounds.extend(new kakao.maps.LatLng(KT_CENTER.Y, KT_CENTER.X));
+      bounds.extend(new kakao.maps.LatLng(data[minIndex].y, data[minIndex].x));
       map.setBounds(bounds);
+      displayMarker(data[minIndex], map);
       setClosestPlace(data[minIndex]);
       speakDestination({
         text: data[minIndex].address_name,
@@ -98,7 +98,7 @@ const KakaoMapContainer = ({ isEventOn }) => {
             >
               다시 듣기
             </Button>
-            {isEventOn && (
+            {!isEventOn && (
               <Button
                 sx={{
                   fontSize: "2.2rem",

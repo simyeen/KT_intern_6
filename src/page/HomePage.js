@@ -5,6 +5,7 @@ import EventListener from "../container/EventListener";
 import KakaoMapContainer from "../container/KakaoMapContainer";
 import SliderContainer from "../container/SliderContainer";
 import VedioContainer from "../container/VedioContainer";
+import getLocation from "../util/getPosition";
 
 const HomePage = () => {
   const [isEventOn, setIsEventOn] = useState(false);
@@ -16,6 +17,7 @@ const HomePage = () => {
         <KakaoMapContainer {...{ isEventOn }} />
         {!isEventOn && <EventListener {...{ setIsEventOn }} />}
       </Container>
+      <button onClick={getLocation}>버튼</button>
       {/* <SliderContainer /> */}
     </Wrapper>
   );
