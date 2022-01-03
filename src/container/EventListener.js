@@ -7,12 +7,9 @@ const EventListener = ({ setIsEventOn }) => {
   let token;
 
   const onEvent = async () => {
-    console.log("이벤트1");
-
     try {
       let appId = "64DFVbvmxjGV9IYG";
       let secret = "CwFXcj55NySZtnAY";
-      console.log("axios 실행");
 
       await $.ajax({
         url: "https://iotmakers.kt.com/oauth/token",
@@ -42,7 +39,7 @@ const EventListener = ({ setIsEventOn }) => {
         }
       );
 
-      console.log(data.data[0].attributes.Touch);
+      console.log("이벤트 감지", data.data[0].attributes.Touch);
 
       if (data.data[0].attributes.Touch === 1) {
         onStop();

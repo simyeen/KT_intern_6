@@ -51,17 +51,22 @@ const TitleDiv = styled.div`
 `;
 
 const Img = styled.img`
-  width: 68px;
-  height: 68px;
+  width: 75px;
+  height: 75px;
   margin-right: 10px;
   margin-bottom: 5px;
+`;
+
+const LogoImg = styled.img`
+  margin-top: 3px;
+  width: 280px;
+  height: 55px;
 `;
 
 const Header = ({ categories, setPostList }) => {
   const [selectCategory, setSelectCategory] = useState("홈");
   const onSelect = (category) => {
     setSelectCategory(category);
-    console.log(selectCategory);
   };
 
   return (
@@ -70,9 +75,10 @@ const Header = ({ categories, setPostList }) => {
         <Wrapper>
           <TitleDiv>
             <Img src={process.env.PUBLIC_URL + "/favicon.ico"} />
-            <Text fontSize={30} fontWeight={1000}>
+            <LogoImg src={require("../asset/logo.png")} />
+            {/* <Text fontSize={30} fontWeight={1000}>
               WAKE UP GENIE
-            </Text>
+            </Text> */}
           </TitleDiv>
           <div />
           <Cotainer>

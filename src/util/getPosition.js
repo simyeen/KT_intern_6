@@ -1,10 +1,13 @@
 export default function getLocation() {
+  let lat;
+  let lng;
+
   if (navigator.geolocation) {
     // GPS를 지원하면
     navigator.geolocation.getCurrentPosition(
       function ({ coords }) {
-        // alert(position.coords.latitude + " " + position.coords.longitude);
-        console.log(coords);
+        lat = coords.latitude;
+        lng = coords.longitude;
       },
       function (error) {
         console.error(error);
@@ -18,4 +21,6 @@ export default function getLocation() {
   } else {
     alert("GPS를 지원하지 않습니다");
   }
+
+  return [lat, lng];
 }

@@ -17,7 +17,6 @@ const HomePage = () => {
         <KakaoMapContainer {...{ isEventOn }} />
         {!isEventOn && <EventListener {...{ setIsEventOn }} />}
       </Container>
-      <button onClick={getLocation}>버튼</button>
       {/* <SliderContainer /> */}
     </Wrapper>
   );

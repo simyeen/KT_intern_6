@@ -7,6 +7,7 @@ import { KT_CENTER, RANGE } from "../common/const";
 import { Button } from "@mui/material";
 import displayMarker from "../util/displayMarker";
 import color from "../common/color";
+import getLocation from "../util/getPosition";
 
 const KakaoMapContainer = ({ isEventOn }) => {
   console.log(isEventOn);
@@ -17,7 +18,7 @@ const KakaoMapContainer = ({ isEventOn }) => {
   let ps = new kakao.maps.services.Places();
   let current_position = { lat: KT_CENTER.Y, lng: KT_CENTER.X };
 
-  const init = () => {
+  const init = async () => {
     let $mapContainer = document.getElementById("map");
     let mapOption = {
       center: new kakao.maps.LatLng(KT_CENTER.Y, KT_CENTER.X),
@@ -62,7 +63,10 @@ const KakaoMapContainer = ({ isEventOn }) => {
   };
 
   useEffect(() => {
-    init();
+    async function testing() {
+      init();
+    }
+    testing();
   }, []);
 
   useEffect(() => {
@@ -79,29 +83,12 @@ const KakaoMapContainer = ({ isEventOn }) => {
           id="map"
           style={{ width: "700px", height: "428px", borderRadius: "25px" }}
         />
-        {closestPlace && <KaKaoMapPresenter {...{ closestPlace }} />}
-
         {
-          <ButtonContainer>
-            <Button
-              sx={{
-                fontSize: "2.2rem",
-                fontWeight: "700",
-                backgroundColor: `${color.darkGray}`,
-                marginRight: "50px",
-                borderRadius: "8px",
-              }}
-              variant="contained"
-              onClick={() => {
-                speakDestination({ text: closestPlace.address_name });
-              }}
-            >
-              다시 듣기
-            </Button>
-            {!isEventOn && (
+          <Container>
+            <ButtonContainer>
               <Button
                 sx={{
-                  fontSize: "2.2rem",
+                  fontSize: "2rem",
                   fontWeight: "700",
                   backgroundColor: `${color.darkGray}`,
                   marginRight: "50px",
@@ -109,13 +96,31 @@ const KakaoMapContainer = ({ isEventOn }) => {
                 }}
                 variant="contained"
                 onClick={() => {
-                  reStart();
+                  speakDestination({ text: closestPlace.address_name });
                 }}
               >
-                재요청
+                다시 듣기
               </Button>
-            )}
-          </ButtonContainer>
+              {!isEventOn && (
+                <Button
+                  sx={{
+                    fontSize: "2rem",
+                    fontWeight: "700",
+                    backgroundColor: `${color.darkGray}`,
+                    marginRight: "50px",
+                    borderRadius: "8px",
+                  }}
+                  variant="contained"
+                  onClick={() => {
+                    reStart();
+                  }}
+                >
+                  재요청
+                </Button>
+              )}
+            </ButtonContainer>
+            {closestPlace && <KaKaoMapPresenter {...{ closestPlace }} />}
+          </Container>
         }
       </KakaoMapContainerBlock>
     </>
@@ -124,10 +129,12 @@ const KakaoMapContainer = ({ isEventOn }) => {
 
 export default KakaoMapContainer;
 
-const KakaoMapContainerBlock = styled.div`
-  /* display: flex; */
-`;
+const KakaoMapContainerBlock = styled.div``;
 
-const ButtonContainer = styled.div`
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: 16px 16px;
 `;
+
+const ButtonContainer = styled.div``;

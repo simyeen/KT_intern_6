@@ -121,6 +121,6 @@ const VideoCotainer = styled.div`
 const ButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 16px 16px;
 `;
