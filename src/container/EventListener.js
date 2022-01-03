@@ -1,13 +1,50 @@
 import React from "react";
 import axios from "axios";
+import $ from "jquery";
+import speakDestination from "../util/speakDestination";
 
 const EventListener = ({ setIsEventOn }) => {
-  let runTime = 0;
+  let token;
 
-  const checkEvent = async () => {
+  const onEvent = async () => {
+    console.log("이벤트1");
+
     try {
-      console.log("이벤트 감지 요청");
-      if (runTime !== 0) {
+      let appId = "64DFVbvmxjGV9IYG";
+      let secret = "CwFXcj55NySZtnAY";
+      console.log("axios 실행");
+
+      await $.ajax({
+        url: "https://iotmakers.kt.com/oauth/token",
+        method: "POST",
+        xhrFields: { withCredentials: true },
+        headers: { Authorization: "Basic " + btoa(appId + ":" + secret) },
+        data: {
+          grant_type: "password",
+          username: "sharon1998",
+          password: "qwerasdf1!",
+        },
+        success: function (result) {
+          token = result.access_token;
+        },
+        error: function (xhr, status, error) {
+          console.log(xhr);
+        },
+      });
+
+      let { data } = await axios.get(
+        "https://iotmakers.kt.com:443/api/v1/streams/sharonD1641177528255/log/last",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(data.data[0].attributes.Touch);
+
+      if (data.data[0].attributes.Touch === 1) {
         onStop();
         setIsEventOn(true);
       }
@@ -16,30 +53,13 @@ const EventListener = ({ setIsEventOn }) => {
     }
   };
 
-  let iotMarkersEventListener = setInterval(checkEvent, 1000);
-
-  const count = () => {
-    runTime++;
-    console.log(runTime);
-  };
+  let iotMarkersEventListener = setInterval(onEvent, 1000);
 
   const onStop = () => {
     console.log("종료");
     clearInterval(iotMarkersEventListener);
   };
-
-  return (
-    <>
-      <button
-        onClick={() => {
-          onStop();
-        }}
-      >
-        나는 api 감지종료 버튼
-      </button>
-      <button onClick={count}>트리거 버튼</button>
-    </>
-  );
+  return <></>;
 };
 
 export default EventListener;
