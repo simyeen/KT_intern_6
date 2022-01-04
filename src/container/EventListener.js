@@ -38,9 +38,10 @@ const EventListener = ({ setIsEventOn, isEventOn }) => {
         }
       );
 
-      console.log("이벤트 감지 touch", data.data[0].attributes.Touch);
+      console.log("iot에서의 touch", data.data[0].attributes.Touch);
 
-      if (data.data[0].attributes.Touch !== 0) {
+      if (data.data[0].attributes.Touch === 1) {
+        console.log("현재 이벤트 값", isEventOn);
         setIsEventOn(isEventOn++);
       }
     } catch (e) {
@@ -48,12 +49,8 @@ const EventListener = ({ setIsEventOn, isEventOn }) => {
     }
   };
 
-  let iotMarkersEventListener = setInterval(onEvent, 1000);
+  setInterval(onEvent, 1000);
 
-  const onStop = () => {
-    console.log("종료");
-    clearInterval(iotMarkersEventListener);
-  };
   return <></>;
 };
 

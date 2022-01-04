@@ -55,7 +55,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
   const reStart = () => {
     init();
     ps.keywordSearch("졸음 쉼터", placesSearchCB);
-    console.log("이벤트는", isEventOn);
+    console.log("카카오 맵 컨테이너 이벤트 감지", isEventOn);
   };
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
   }, []);
 
   useEffect(() => {
-    if (!isEventOn) {
+    if (isEventOn === 0) {
       return;
     }
     reStart();

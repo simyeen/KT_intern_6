@@ -15,11 +15,6 @@ const StyledText = styled(Text)`
   line-height: 1.1;
 `;
 
-const DisText = styled.span`
-  font-size: 1.3rem;
-  line-height: 1.1;
-`;
-
 const TimeText = styled.span`
   color: ${color.KT_blue};
   font-weight: 1000;
@@ -36,6 +31,7 @@ const KaKaoMapPresenter = ({ closestPlace, isEventOn }) => {
       text: address_name,
     });
   }, [isEventOn]);
+
   return (
     <KaKaoMapPresenterBlock>
       <Text fontSize={25} fontWeight={700}>
