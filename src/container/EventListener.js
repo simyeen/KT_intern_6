@@ -42,7 +42,8 @@ const EventListener = ({ setIsEventOn, isEventOn }) => {
 
       if (Number(data.data[0].attributes.Touch) === 1) {
         console.log("현재 이벤트 값", isEventOn);
-        setIsEventOn(isEventOn++);
+        let eventValue = isEventOn;
+        setIsEventOn(eventValue + 1);
       }
     } catch (e) {
       console.log(e);
