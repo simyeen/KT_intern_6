@@ -43,6 +43,7 @@ const EventListener = ({ setIsEventOn }) => {
 
       if (data.data[0].attributes.Touch === 1) {
         onStop();
+        speakDestination();
         setIsEventOn(true);
       }
     } catch (e) {
