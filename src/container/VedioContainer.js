@@ -57,7 +57,7 @@ const VedioContainer = () => {
         <ButtonDiv>
           <Button
             sx={{
-              fontSize: "2.2rem",
+              fontSize: "2rem",
               fontWeight: "700",
               backgroundColor: `${color.darkGray}`,
               marginRight: "50px",
@@ -68,11 +68,11 @@ const VedioContainer = () => {
               init();
             }}
           >
-            켜키
+            비디오 켜기
           </Button>
           <Button
             sx={{
-              fontSize: "2.2rem",
+              fontSize: "2rem",
               fontWeight: "700",
               backgroundColor: `${color.darkGray}`,
               borderRadius: "8px",
@@ -82,7 +82,7 @@ const VedioContainer = () => {
               onClick();
             }}
           >
-            끄기
+            비디오 끄기
           </Button>
         </ButtonDiv>
       </VideoCotainer>

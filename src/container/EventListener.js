@@ -39,7 +39,7 @@ const EventListener = ({ setIsEventOn }) => {
         }
       );
 
-      console.log("이벤트 감지", data.data[0].attributes.Touch);
+      console.log("이벤트 감지 touch", data.data[0].attributes.Touch);
 
       if (data.data[0].attributes.Touch === 1) {
         onStop();
