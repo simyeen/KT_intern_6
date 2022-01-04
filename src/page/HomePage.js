@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import color from "../common/color";
 import Form from "../common/Form";
@@ -10,8 +10,6 @@ import VedioContainer from "../container/VedioContainer";
 const HomePage = () => {
   const [isEventOn, setIsEventOn] = useState(0);
   const [location, setLocation] = useState(null);
-  const ref = useRef();
-  ref.current = null;
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -39,7 +37,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <Wrapper id="나는 래퍼">
+    <Wrapper>
       <Container>
         <VedioContainer />
         {!location && (

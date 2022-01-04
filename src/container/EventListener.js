@@ -1,9 +1,8 @@
 import React from "react";
 import axios from "axios";
 import $ from "jquery";
-import speakDestination from "../util/speakDestination";
 
-const EventListener = ({ setIsEventOn }) => {
+const EventListener = ({ setIsEventOn, isEventOn }) => {
   let token;
 
   const onEvent = async () => {
@@ -25,7 +24,7 @@ const EventListener = ({ setIsEventOn }) => {
           token = result.access_token;
         },
         error: function (xhr, status, error) {
-          console.log(xhr);
+          console.log(xhr, status, error);
         },
       });
 
@@ -43,8 +42,7 @@ const EventListener = ({ setIsEventOn }) => {
 
       if (data.data[0].attributes.Touch === 1) {
         onStop();
-        speakDestination();
-        setIsEventOn(true);
+        setIsEventOn(isEventOn++);
       }
     } catch (e) {
       console.log(e);

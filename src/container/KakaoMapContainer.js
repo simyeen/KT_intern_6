@@ -3,13 +3,12 @@ import styled from "styled-components";
 import haversine from "haversine-distance";
 import speakDestination from "../util/speakDestination";
 import KaKaoMapPresenter from "../presenter/KaKaoMapPresenter";
-import { KT_CENTER, RANGE } from "../common/const";
+import { RANGE } from "../common/const";
 import { Button } from "@mui/material";
 import displayMarker from "../util/displayMarker";
 import color from "../common/color";
 
 const KakaoMapContainer = ({ isEventOn, location }) => {
-  console.log(location);
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState("");
 
@@ -64,10 +63,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
   };
 
   useEffect(() => {
-    async function testing() {
-      init();
-    }
-    testing();
+    init();
   }, []);
 
   useEffect(() => {
@@ -102,7 +98,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
               >
                 다시 듣기
               </Button>
-              {!isEventOn && (
+              {/* {!isEventOn && (
                 <Button
                   sx={{
                     fontSize: "2rem",
@@ -118,7 +114,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
                 >
                   재요청
                 </Button>
-              )}
+              )} */}
             </ButtonContainer>
             {closestPlace && <KaKaoMapPresenter {...{ closestPlace }} />}
           </Container>

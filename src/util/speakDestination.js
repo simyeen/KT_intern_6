@@ -8,9 +8,9 @@ const speakDestination = async ({ init = false, replay = false, text }) => {
   let xmlData;
 
   if (text === undefined) {
-    xmlData = `<speak>아직 경로를 탐색하지 않았습니다.</speak>`;
+    xmlData = `<speak>아직 경로를 탐색하지 않았습니다. 경로를 탐색해주세요.</speak>`;
   } else {
-    xmlData = `<speak>일어나세요 휴먼 ${replayText}. ${initText} 가장 가까운 곳은 ${text} 입니다.</speak>`;
+    xmlData = `<speak>일어나세요 졸음운전깨워죠팀 ${replayText}. ${initText} 가장 가까운 곳은 ${text} 입니다.</speak>`;
   }
 
   try {
