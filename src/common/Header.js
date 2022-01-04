@@ -75,10 +75,10 @@ const Header = ({ categories, setPostList }) => {
         <Wrapper>
           <TitleDiv>
             <Img src={process.env.PUBLIC_URL + "/favicon.ico"} />
-            <LogoImg src={require("../asset/logo.png")} />
-            {/* <Text fontSize={30} fontWeight={1000}>
+            {/* <LogoImg src={require("../asset/logo.png")} /> */}
+            <Text fontSize={30} fontWeight={1000}>
               WAKE UP GENIE
-            </Text> */}
+            </Text>
           </TitleDiv>
           <div />
           <Cotainer>

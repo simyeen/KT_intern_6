@@ -7,26 +7,25 @@ import { KT_CENTER, RANGE } from "../common/const";
 import { Button } from "@mui/material";
 import displayMarker from "../util/displayMarker";
 import color from "../common/color";
-import getLocation from "../util/getPosition";
 
-const KakaoMapContainer = ({ isEventOn }) => {
-  console.log(isEventOn);
+const KakaoMapContainer = ({ isEventOn, location }) => {
+  console.log(location);
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState("");
 
   let map;
   let ps = new kakao.maps.services.Places();
-  let current_position = { lat: KT_CENTER.Y, lng: KT_CENTER.X };
+  let current_position = { lat: location.latitude, lng: location.longitude };
 
   const init = async () => {
     let $mapContainer = document.getElementById("map");
     let mapOption = {
-      center: new kakao.maps.LatLng(KT_CENTER.Y, KT_CENTER.X),
+      center: new kakao.maps.LatLng(location.latitude, location.longitude),
       level: 3,
     };
     map = new kakao.maps.Map($mapContainer, mapOption);
 
-    displayMarker({ y: KT_CENTER.Y, x: KT_CENTER.X }, map);
+    displayMarker({ y: location.latitude, x: location.longitude }, map);
   };
 
   // 키워드 검색 완료 시 호출되는 콜백함수 입니다
@@ -44,7 +43,9 @@ const KakaoMapContainer = ({ isEventOn }) => {
         if (distance <= minDistance) minIndex = i;
       }
 
-      bounds.extend(new kakao.maps.LatLng(KT_CENTER.Y, KT_CENTER.X));
+      bounds.extend(
+        new kakao.maps.LatLng(location.latitude, location.longitude)
+      );
       bounds.extend(new kakao.maps.LatLng(data[minIndex].y, data[minIndex].x));
       map.setBounds(bounds);
       displayMarker(data[minIndex], map);

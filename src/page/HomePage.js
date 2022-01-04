@@ -1,23 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import color from "../common/color";
 import Form from "../common/Form";
+import Text from "../common/Text";
 import EventListener from "../container/EventListener";
 import KakaoMapContainer from "../container/KakaoMapContainer";
-import SliderContainer from "../container/SliderContainer";
 import VedioContainer from "../container/VedioContainer";
-import getLocation from "../util/getPosition";
 
 const HomePage = () => {
   const [isEventOn, setIsEventOn] = useState(false);
+  const [location, setLocation] = useState(null);
+  const ref = useRef();
+  ref.current = null;
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      // GPS를 지원하면
+      navigator.geolocation.getCurrentPosition(
+        function ({ coords }) {
+          setLocation(coords);
+        },
+        function (error) {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        }
+      );
+    } else {
+      alert("GPS를 지원하지 않습니다");
+    }
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
 
   return (
     <Wrapper id="나는 래퍼">
       <Container>
         <VedioContainer />
-        <KakaoMapContainer {...{ isEventOn }} />
-        {!isEventOn && <EventListener {...{ setIsEventOn }} />}
+        {!location && (
+          <LoadingContainer>
+            <Img src={require("../asset/KT_loading.png")} />
+            <Text>위치정보를 얻고있습니다. 잠시만 기다려주세요!</Text>
+          </LoadingContainer>
+        )}
+        {location && <KakaoMapContainer {...{ isEventOn }} {...{ location }} />}
+        {/* {!isEventOn && <EventListener {...{ setIsEventOn }} />} */}
       </Container>
-      {/* <SliderContainer /> */}
     </Wrapper>
   );
 };
@@ -38,4 +71,16 @@ const Container = styled(Form)`
   justify-content: space-between;
   /* width: 100%; */
   height: 100%;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Img = styled.img`
+  width: 600px;
+  height: 428px;
+  border-radius: 15px;
+  /* background-color: ${color.white}; */
 `;
