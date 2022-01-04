@@ -56,6 +56,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
     init();
     ps.keywordSearch("졸음 쉼터", placesSearchCB);
     console.log("카카오 맵 컨테이너 이벤트 감지", isEventOn);
+    speakDestination({ text: closestPlace.address_name });
   };
 
   useEffect(() => {

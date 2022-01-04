@@ -25,12 +25,12 @@ const TimeText = styled.span`
 const KaKaoMapPresenter = ({ closestPlace, isEventOn }) => {
   const { place_name, address_name } = closestPlace;
 
-  useEffect(() => {
-    console.log("알림 정보 표시", isEventOn);
-    speakDestination({
-      text: address_name,
-    });
-  }, [isEventOn]);
+  // useEffect(() => {
+  //   console.log("알림 정보 표시", isEventOn);
+  //   speakDestination({
+  //     text: address_name,
+  //   });
+  // }, [isEventOn]);
 
   return (
     <KaKaoMapPresenterBlock>
