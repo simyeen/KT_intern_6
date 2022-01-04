@@ -40,7 +40,7 @@ const EventListener = ({ setIsEventOn, isEventOn }) => {
 
       console.log("iot에서의 touch", data.data[0].attributes.Touch);
 
-      if (data.data[0].attributes.Touch === 1) {
+      if (Number(data.data[0].attributes.Touch) === 1) {
         console.log("현재 이벤트 값", isEventOn);
         setIsEventOn(isEventOn++);
       }
