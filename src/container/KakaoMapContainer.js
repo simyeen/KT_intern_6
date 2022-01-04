@@ -49,7 +49,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
       map.setBounds(bounds);
       displayMarker(data[minIndex], map);
       setClosestPlace(data[minIndex]);
-      speakDestination({ text: closestPlace.address_name });
+      speakDestination({ text: data[minIndex].address_name });
     }
   }
 
@@ -95,8 +95,8 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
               >
                 다시 듣기
               </Button>
-              <input placeholder="이름을 입력해주세요." />
-              {/* {!isEventOn && (
+              {/* <input placeholder="이름을 입력해주세요." /> */}
+              {!isEventOn && (
                 <Button
                   sx={{
                     fontSize: "2rem",
@@ -112,7 +112,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
                 >
                   재요청
                 </Button>
-              )} */}
+              )}
             </ButtonContainer>
             {closestPlace && (
               <KaKaoMapPresenter {...{ closestPlace }} {...{ isEventOn }} />
