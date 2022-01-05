@@ -109,8 +109,6 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
           id="map"
           style={{ width: "700px", height: "428px", borderRadius: "25px" }}
         />
-        <button id="btn">누르면 안되는 버튼</button>
-
         <Container>
           <EventListener {...{ reStart }} />
           <ButtonContainer>
@@ -129,7 +127,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
             >
               다시 듣기
             </Button>
-            {!isEventOn && (
+            {/* {!isEventOn && (
               <Button
                 sx={{
                   fontSize: "2rem",
@@ -145,7 +143,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
               >
                 재요청
               </Button>
-            )}
+            )} */}
           </ButtonContainer>
           {closestPlace && closestDistance && (
             <KaKaoMapPresenter
@@ -155,6 +153,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
             />
           )}
         </Container>
+        <SpeakButton id="btn">누르면 안되는 버튼</SpeakButton>
       </KakaoMapContainerBlock>
     </>
   );
@@ -171,3 +170,7 @@ const Container = styled.div`
 `;
 
 const ButtonContainer = styled.div``;
+
+const SpeakButton = styled.div`
+  display: none;
+`;
