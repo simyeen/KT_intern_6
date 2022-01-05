@@ -1,4 +1,5 @@
-//
+// Map을 보여주는 필요한 API를 호출합니다.
+// 그리고 얻어낸 data에서 가장 가까운 졸음 쉼터를 얻어내고, 지도에 표시합니다.
 
 import React, { useEffect, useState } from "react";
 
@@ -18,10 +19,13 @@ const MapContainer = ({ isEventOn, location }) => {
   const [closestPlace, setClosestPlace] = useState("");
   const [closestDistance, setClosestDistance] = useState("");
 
-  let map;
-  let ps = new kakao.maps.services.Places();
   let current_position = { lat: location.latitude, lng: location.longitude };
+  let ps = new kakao.maps.services.Places();
+  let map;
 
+  // 1. 쿼리선택자로 map이라는 div를 선택합니다.
+  // 2. new kakoa.maps.Map 이라는 생성자를 통해서 맵을 생성합니다.
+  // 3. displayMaker를 통해서 맵에서 해당 좌표의 Marker를 표시합니다.
   const init = async () => {
     let $mapContainer = document.getElementById("map");
     let mapOption = {
@@ -37,15 +41,18 @@ const MapContainer = ({ isEventOn, location }) => {
     );
   };
 
-  // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+  // 4. 키워드 검색 완료 시 호출되는 콜백함수 입니다
   function placesSearchCB(data, status) {
     if (status === kakao.maps.services.Status.OK) {
+      // 5. 지도 위치를 재세팅하거나 마커를 표시하기 위한 bounds를 생성합니다.
       let bounds = new kakao.maps.LatLngBounds();
-      let minIndex;
       let minDistance = 1e9;
+      let minIndex;
 
+      // 6. 얻어낸 data를 돌면서 가장 가까운 졸음 쉼터를 얻어냅니다.
       for (let i = 0; i < data.length; i++) {
         const { y, x } = data[i];
+        // 7. 위, 경도를 거리로 변환시키는 haversine 라이브러리입니다.
         const distance = haversine(current_position, { lat: y, lng: x }) / 1000;
 
         if (distance >= RANGE.MAX) continue;
@@ -55,12 +62,16 @@ const MapContainer = ({ isEventOn, location }) => {
         }
       }
 
+      // 8. 현재 위치한 좌표, 가장 가까운 졸음 쉼터를 기준으로 지도를 재세팅합니다.
       bounds.extend(
         new kakao.maps.LatLng(location.latitude, location.longitude)
       );
       bounds.extend(new kakao.maps.LatLng(data[minIndex].y, data[minIndex].x));
       map.setBounds(bounds);
+
       displayMarker(data[minIndex], map, location);
+
+      // 9.
       setClosestPlace(data[minIndex]);
       setClosestDistance(minDistance);
       onClickForceEvent(data[minIndex]);

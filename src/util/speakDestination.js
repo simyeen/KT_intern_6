@@ -25,12 +25,13 @@ const speakDestination = async ({
       {
         headers: {
           "Content-Type": "application/xml",
-          Authorization: `KakaoAK b7f7a8bbc95d043dc498c800f2a06b28`,
+          Authorization: `KakaoAK db3bb37a8a4e03a522400cc0a94ba0b7`,
         },
         responseType: "arraybuffer",
       }
     );
 
+    const context = new AudioContext();
     context.decodeAudioData(data, (buffer) => {
       const source = context.createBufferSource();
       source.buffer = buffer;

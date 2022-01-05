@@ -1,3 +1,5 @@
+// HomePage Component로 필요한 Container들을 import 해서 보여줍니다.
+
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Form from "../common/Form";
@@ -8,6 +10,7 @@ import VedioContainer from "../container/VedioContainer";
 const HomePage = () => {
   const [location, setLocation] = useState(null);
 
+  // 1. html geolocation를 이용해 현재 위, 경도를 얻어냅니다.
   const getLocation = () => {
     if (navigator.geolocation) {
       // GPS를 지원하면
@@ -63,7 +66,6 @@ const Container = styled(Form)`
   diplay: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* width: 100%; */
   height: 100%;
 `;
 

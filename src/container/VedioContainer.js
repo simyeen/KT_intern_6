@@ -3,8 +3,9 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
-import Button from "@mui/material/Button";
 import color from "../common/color";
+
+import Button from "@mui/material/Button";
 
 const VedioContainer = () => {
   const [isVideoOn, setIsVideoOn] = useState(false);
