@@ -33,7 +33,7 @@ const MapContainer = ({ location }) => {
       level: 3,
     };
     map = new kakao.maps.Map($mapContainer, mapOption);
-
+    // displayMaker 함수는 util 폴더에 존재합니다.
     displayMarker(
       { y: location.latitude, x: location.longitude },
       map,
