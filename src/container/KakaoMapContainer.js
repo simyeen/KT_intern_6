@@ -3,14 +3,17 @@ import styled from "styled-components";
 import haversine from "haversine-distance";
 import speakDestination from "../util/speakDestination";
 import KaKaoMapPresenter from "../presenter/KaKaoMapPresenter";
-import { RANGE } from "../common/const";
+import { RANGE, SEARCH_PLACE } from "../common/const";
 import { Button } from "@mui/material";
 import displayMarker from "../util/displayMarker";
 import color from "../common/color";
+import EventListener from "./EventListener";
+import Speak from "./Speak";
 
 const KakaoMapContainer = ({ isEventOn, location }) => {
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState("");
+  const [closestDistance, setClosestDistance] = useState("");
 
   let map;
   let ps = new kakao.maps.services.Places();
@@ -24,7 +27,11 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
     };
     map = new kakao.maps.Map($mapContainer, mapOption);
 
-    displayMarker({ y: location.latitude, x: location.longitude }, map);
+    displayMarker(
+      { y: location.latitude, x: location.longitude },
+      map,
+      location
+    );
   };
 
   // 키워드 검색 완료 시 호출되는 콜백함수 입니다
@@ -39,7 +46,10 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
         const distance = haversine(current_position, { lat: y, lng: x }) / 1000;
 
         if (distance >= RANGE.MAX) continue;
-        if (distance <= minDistance) minIndex = i;
+        if (distance <= minDistance) {
+          minIndex = i;
+          minDistance = distance;
+        }
       }
 
       bounds.extend(
@@ -47,24 +57,46 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
       );
       bounds.extend(new kakao.maps.LatLng(data[minIndex].y, data[minIndex].x));
       map.setBounds(bounds);
-      displayMarker(data[minIndex], map);
+      displayMarker(data[minIndex], map, location);
       setClosestPlace(data[minIndex]);
-      speakDestination({ text: data[minIndex].address_name });
+      setClosestDistance(minDistance);
+      onClickForceEvent(data[minIndex]);
     }
   }
 
+  const onClickForceEvent = (place) => {
+    console.log("onClick 실행횟수");
+    const context = new AudioContext();
+
+    const $btn = document.getElementById("btn");
+    // speakDestination({ init: true, text: place.address_name, context });
+    $btn.addEventListener("click", () => {
+      console.log("Playback1 Play successfully");
+      speakDestination({ init: true, text: place.address_name, context });
+    });
+
+    $btn.addEventListener("click", function () {
+      context.resume().then(() => {
+        console.log("Playback2 resumed successfully");
+      });
+    });
+    $btn.click();
+  };
+
   const reStart = () => {
+    console.log("restart 시키기");
     init();
-    ps.keywordSearch("졸음 쉼터", placesSearchCB);
-    console.log("카카오 맵 컨테이너 이벤트 감지", isEventOn);
+    ps.keywordSearch(SEARCH_PLACE.SLEEP_CENTER, placesSearchCB);
   };
 
   useEffect(() => {
     init();
+    const $btn = document.getElementById("btn");
+    $btn.click();
   }, []);
 
   useEffect(() => {
-    if (isEventOn === 0) {
+    if (!isEventOn) {
       return;
     }
     reStart();
@@ -77,9 +109,27 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
           id="map"
           style={{ width: "700px", height: "428px", borderRadius: "25px" }}
         />
-        {
-          <Container>
-            <ButtonContainer>
+        <button id="btn">누르면 안되는 버튼</button>
+
+        <Container>
+          <EventListener {...{ reStart }} />
+          <ButtonContainer>
+            <Button
+              sx={{
+                fontSize: "2rem",
+                fontWeight: "700",
+                backgroundColor: `${color.darkGray}`,
+                marginRight: "50px",
+                borderRadius: "8px",
+              }}
+              variant="contained"
+              onClick={() => {
+                speakDestination({ text: closestPlace.address_name });
+              }}
+            >
+              다시 듣기
+            </Button>
+            {!isEventOn && (
               <Button
                 sx={{
                   fontSize: "2rem",
@@ -90,35 +140,21 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
                 }}
                 variant="contained"
                 onClick={() => {
-                  speakDestination({ text: closestPlace.address_name });
+                  reStart();
                 }}
               >
-                다시 듣기
+                재요청
               </Button>
-              {/* <input placeholder="이름을 입력해주세요." /> */}
-              {!isEventOn && (
-                <Button
-                  sx={{
-                    fontSize: "2rem",
-                    fontWeight: "700",
-                    backgroundColor: `${color.darkGray}`,
-                    marginRight: "50px",
-                    borderRadius: "8px",
-                  }}
-                  variant="contained"
-                  onClick={() => {
-                    reStart();
-                  }}
-                >
-                  재요청
-                </Button>
-              )}
-            </ButtonContainer>
-            {closestPlace && (
-              <KaKaoMapPresenter {...{ closestPlace }} {...{ isEventOn }} />
             )}
-          </Container>
-        }
+          </ButtonContainer>
+          {closestPlace && closestDistance && (
+            <KaKaoMapPresenter
+              {...{ closestPlace }}
+              {...{ closestDistance }}
+              {...{ isEventOn }}
+            />
+          )}
+        </Container>
       </KakaoMapContainerBlock>
     </>
   );

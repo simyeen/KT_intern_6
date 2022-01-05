@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import $ from "jquery";
+import speakDestination from "../util/speakDestination";
 
-const EventListener = ({ setIsEventOn, isEventOn }) => {
+const EventListener = ({ setIsEventOn, isEventOn, reStart }) => {
   let token;
 
   const onEvent = async () => {
@@ -38,19 +39,19 @@ const EventListener = ({ setIsEventOn, isEventOn }) => {
         }
       );
 
-      console.log("iot에서의 touch", data.data[0].attributes.Touch);
-      console.log("현재 이벤트 값", isEventOn);
-      if (Number(data.data[0].attributes.Touch) === 1) {
-        console.log("현재 이벤트 값", isEventOn);
-        let eventValue = isEventOn;
-        setIsEventOn(eventValue + 1);
+      console.log("iot에서의 touch", data.data[0].attributes);
+      if (data.data[0].attributes.Touch === 1) {
+        // speakDestination({ init: true });
+        reStart();
       }
     } catch (e) {
       console.log(e);
     }
   };
 
-  setInterval(onEvent, 1000);
+  useEffect(() => {
+    let intervalIot = setInterval(onEvent, 1000);
+  }, []);
 
   return <></>;
 };

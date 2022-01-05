@@ -8,7 +8,7 @@ import KakaoMapContainer from "../container/KakaoMapContainer";
 import VedioContainer from "../container/VedioContainer";
 
 const HomePage = () => {
-  const [isEventOn, setIsEventOn] = useState(0);
+  const [isEventOn, setIsEventOn] = useState(false);
   const [location, setLocation] = useState(null);
 
   const getLocation = () => {
@@ -47,7 +47,7 @@ const HomePage = () => {
           </LoadingContainer>
         )}
         {location && <KakaoMapContainer {...{ isEventOn }} {...{ location }} />}
-        <EventListener {...{ setIsEventOn }} {...{ isEventOn }} />
+        {/* <EventListener {...{ setIsEventOn }} {...{ isEventOn }} /> */}
       </Container>
     </Wrapper>
   );

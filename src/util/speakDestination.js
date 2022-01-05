@@ -2,7 +2,12 @@ import axios from "axios";
 import { VOICE } from "../common/const";
 
 // 지도에서 얻어낸 가장 가까운 목적지를 음성으로 알려줍니다.
-const speakDestination = async ({ init = false, replay = false, text }) => {
+const speakDestination = async ({
+  init = false,
+  replay = false,
+  text,
+  context,
+}) => {
   let replayText = replay ? VOICE.REPLAY : "";
   let initText = init ? VOICE.WARNING : "";
   let xmlData;
@@ -10,7 +15,7 @@ const speakDestination = async ({ init = false, replay = false, text }) => {
   if (text === undefined) {
     xmlData = `<speak>아직 경로를 탐색하지 않았습니다. 경로를 탐색해주세요.</speak>`;
   } else {
-    xmlData = `<speak>일어나세요 졸음운전깨워죠팀 ${replayText}. ${initText} 가장 가까운 곳은 ${text} 입니다.</speak>`;
+    xmlData = `<speak>일어나주세요. ${replayText}. 가장 가까운 곳은 ${text} 입니다.</speak>`;
   }
 
   try {
@@ -27,7 +32,7 @@ const speakDestination = async ({ init = false, replay = false, text }) => {
     );
 
     console.log(data);
-    const context = new AudioContext();
+    // const context = new AudioContext();
     context.decodeAudioData(data, (buffer) => {
       const source = context.createBufferSource();
       source.buffer = buffer;
