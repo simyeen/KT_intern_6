@@ -1,3 +1,6 @@
+// 웹 페이지 좌측에 있는 비디오를 보여주는 Vedio Component입니다.
+// 사용자는 이 화면을 통해 자신의 모습을 확인할 수 있습니다.
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
@@ -7,7 +10,8 @@ const VedioContainer = () => {
   const [isVideoOn, setIsVideoOn] = useState(false);
   let localstream;
 
-  const init = () => {
+  // 1. HTML의  navigator.getUserMedia의 권한을 얻습니다. => 카메라 권한 요청.
+  const onStartVedio = () => {
     navigator.getUserMedia =
       navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
@@ -34,7 +38,8 @@ const VedioContainer = () => {
     }
   };
 
-  const onClick = () => {
+  // 2. pause로 비디오 끄는 함수입니다.
+  const onStopVedio = () => {
     let video = document.querySelector("video");
 
     if (!isVideoOn) {
@@ -66,7 +71,7 @@ const VedioContainer = () => {
             }}
             variant="contained"
             onClick={() => {
-              init();
+              onStartVedio();
             }}
           >
             비디오 켜기
@@ -80,7 +85,7 @@ const VedioContainer = () => {
             }}
             variant="contained"
             onClick={() => {
-              onClick();
+              onStopVedio();
             }}
           >
             비디오 끄기

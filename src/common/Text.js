@@ -1,4 +1,5 @@
 // 필요할 때 마다 Text에 여러 속성(hover, size, align ...)을 적용시킨 Custom Text가 가능합니다.
+// <Text fontSize = {FONR_SIZE} > 등..
 
 import React from "react";
 import styled, { css } from "styled-components";

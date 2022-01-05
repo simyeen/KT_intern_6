@@ -3,7 +3,7 @@ import styled from "styled-components";
 import color from "../common/color";
 import Text from "../common/Text";
 
-const KaKaoMapPresenterBlock = styled.div`
+const MapPresenterBlock = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -21,11 +21,11 @@ const TimeText = styled.span`
   line-height: 1.4;
 `;
 
-const KaKaoMapPresenter = ({ closestPlace, closestDistance, isEventOn }) => {
+const MapPresenter = ({ closestPlace, closestDistance, isEventOn }) => {
   const { place_name, address_name } = closestPlace;
 
   return (
-    <KaKaoMapPresenterBlock>
+    <MapPresenterBlock>
       <Text fontSize={25} fontWeight={700} textAlign="right">
         {place_name}
       </Text>
@@ -33,8 +33,8 @@ const KaKaoMapPresenter = ({ closestPlace, closestDistance, isEventOn }) => {
       <StyledText>
         예측거리 <TimeText>{closestDistance.toFixed(1)} </TimeText>km
       </StyledText>
-    </KaKaoMapPresenterBlock>
+    </MapPresenterBlock>
   );
 };
 
-export default KaKaoMapPresenter;
+export default MapPresenter;

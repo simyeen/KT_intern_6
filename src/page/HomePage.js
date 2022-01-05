@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Form from "../common/Form";
 import Text from "../common/Text";
-import KakaoMapContainer from "../container/KakaoMapContainer";
+import MapContainer from "../container/MapContainer";
 import VedioContainer from "../container/VedioContainer";
 
 const HomePage = () => {
@@ -43,7 +43,7 @@ const HomePage = () => {
             <Text>위치정보를 얻고있습니다. 잠시만 기다려주세요!</Text>
           </LoadingContainer>
         )}
-        {location && <KakaoMapContainer {...{ location }} />}
+        {location && <MapContainer {...{ location }} />}
       </Container>
     </Wrapper>
   );

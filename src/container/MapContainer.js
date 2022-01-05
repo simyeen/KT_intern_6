@@ -1,15 +1,19 @@
+//
+
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import haversine from "haversine-distance";
-import speakDestination from "../util/speakDestination";
-import KaKaoMapPresenter from "../presenter/KaKaoMapPresenter";
+
 import { RANGE, SEARCH_PLACE } from "../common/const";
-import { Button } from "@mui/material";
-import displayMarker from "../util/displayMarker";
 import color from "../common/color";
+import speakDestination from "../util/speakDestination";
+import displayMarker from "../util/displayMarker";
+import MapPresenter from "../presenter/MapPresenter";
 import EventListener from "./EventListener";
 
-const KakaoMapContainer = ({ isEventOn, location }) => {
+import { Button } from "@mui/material";
+import styled from "styled-components";
+import haversine from "haversine-distance";
+
+const MapContainer = ({ isEventOn, location }) => {
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState("");
   const [closestDistance, setClosestDistance] = useState("");
@@ -98,7 +102,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
 
   return (
     <>
-      <KakaoMapContainerBlock>
+      <MapContainerBlock>
         <div
           id="map"
           style={{ width: "700px", height: "428px", borderRadius: "25px" }}
@@ -123,7 +127,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
             </Button>
           </ButtonContainer>
           {closestPlace && closestDistance && (
-            <KaKaoMapPresenter
+            <MapPresenter
               {...{ closestPlace }}
               {...{ closestDistance }}
               {...{ isEventOn }}
@@ -131,14 +135,14 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
           )}
         </Container>
         <SpeakButton id="btn"></SpeakButton>
-      </KakaoMapContainerBlock>
+      </MapContainerBlock>
     </>
   );
 };
 
-export default KakaoMapContainer;
+export default MapContainer;
 
-const KakaoMapContainerBlock = styled.div``;
+const MapContainerBlock = styled.div``;
 
 const Container = styled.div`
   display: flex;
