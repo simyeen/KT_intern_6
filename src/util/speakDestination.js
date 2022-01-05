@@ -26,7 +26,7 @@ const speakDestination = async ({
       {
         headers: {
           "Content-Type": "application/xml",
-          Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}`,
+          Authorization: `KakaoAK db3bb37a8a4e03a522400cc0a94ba0b7`,
         },
         responseType: "arraybuffer",
       }
