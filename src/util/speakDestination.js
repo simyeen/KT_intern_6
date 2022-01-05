@@ -18,6 +18,7 @@ const speakDestination = async ({
     xmlData = `<speak>일어나주세요. ${replayText}. 가장 가까운 곳은 ${text} 입니다.</speak>`;
   }
 
+  // 1. 해당 API로 TTS를 요청합니다. 이때 타입은 xml입니다.
   try {
     const { data } = await axios.post(
       "https://kakaoi-newtone-openapi.kakao.com/v1/synthesize",
@@ -25,12 +26,13 @@ const speakDestination = async ({
       {
         headers: {
           "Content-Type": "application/xml",
-          Authorization: `KakaoAK db3bb37a8a4e03a522400cc0a94ba0b7`,
+          Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}`,
         },
         responseType: "arraybuffer",
       }
     );
 
+    // 2. Audio를 실행하기위해 context를 생성하고 decode해서 얻은 파일을 재생시킵니다.
     const context = new AudioContext();
     context.decodeAudioData(data, (buffer) => {
       const source = context.createBufferSource();

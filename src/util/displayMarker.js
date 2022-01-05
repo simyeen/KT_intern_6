@@ -1,8 +1,8 @@
+// 마커를 생성하고 지도에 표시합니다
+
 const { kakao } = window;
 
 export default function displayMarker(place, map, location) {
-  // 마커를 생성하고 지도에 표시합니다
-
   let marker = new kakao.maps.Marker({
     map: map,
     position: new kakao.maps.LatLng(place.y, place.x),

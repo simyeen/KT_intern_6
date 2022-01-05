@@ -10,8 +10,8 @@ const EventListener = ({ reStart }) => {
   // 1. 비동기 요청으로 Iot Makers access_token을 얻어옵니다.
   const onEvent = async () => {
     try {
-      let appId = "64DFVbvmxjGV9IYG";
-      let secret = "CwFXcj55NySZtnAY";
+      let appId = `${process.env.REACT_APP_IOT_MAKERS_APP_ID}`;
+      let secret = `${process.env.REACT_APP_IOT_MAKERS_SECRET}`;
 
       await $.ajax({
         url: "https://iotmakers.kt.com/oauth/token",
@@ -20,8 +20,8 @@ const EventListener = ({ reStart }) => {
         headers: { Authorization: "Basic " + btoa(appId + ":" + secret) },
         data: {
           grant_type: "password",
-          username: "sharon1998",
-          password: "qwerasdf1!",
+          username: `${process.env.REACT_APP_IOT_MAKERS_USER_NAME}`,
+          password: `${process.env.REACT_APP_IOT_MAKERS_PASSWORD}`,
         },
         success: function (result) {
           token = result.access_token;

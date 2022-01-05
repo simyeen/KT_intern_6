@@ -14,7 +14,7 @@ import { Button } from "@mui/material";
 import styled from "styled-components";
 import haversine from "haversine-distance";
 
-const MapContainer = ({ isEventOn, location }) => {
+const MapContainer = ({ location }) => {
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState("");
   const [closestDistance, setClosestDistance] = useState("");
@@ -71,27 +71,31 @@ const MapContainer = ({ isEventOn, location }) => {
 
       displayMarker(data[minIndex], map, location);
 
-      // 9.
+      // 9. setState를 통해서 가장 가까운 졸음센터 object를 저장합니다.
+      // state값이 때문에 rerendering이 발생합니다.
       setClosestPlace(data[minIndex]);
       setClosestDistance(minDistance);
+      // 10. AudioContext 이벤트 같은 경우 사용자의 제스쳐가 발생해야 실행됩니다.(구글 크롬 기준)
+      // 하지만, TTS를 실행시키는 부분이 센서 터치버튼이기 때문에 별도의 button 이벤트를 지정했습니다.
       onClickForceEvent(data[minIndex]);
     }
   }
 
+  // 11. 센서를 감지하면 $btn이 가르키는 버튼의 onClick 이벤트를 발생시킵니다.
   const onClickForceEvent = (place) => {
     const context = new AudioContext();
     const $btn = document.getElementById("btn");
 
-    $btn.addEventListener("click", () => {
-      console.log("Playback1 Play successfully");
-      speakDestination({ init: true, text: place.address_name, context });
-    });
+    // $btn.addEventListener("click", () => {
+    //   console.log("Playback1 Play successfully");
+    // });
 
-    $btn.addEventListener("click", function () {
-      context.resume().then(() => {
-        console.log("Playback2 resumed successfully");
-      });
-    });
+    // $btn.addEventListener("click", function () {
+    //   context.resume().then(() => {
+    //     console.log("Playback2 resumed successfully");
+    //   });
+    // });
+
     $btn.click();
   };
 
@@ -100,16 +104,10 @@ const MapContainer = ({ isEventOn, location }) => {
     ps.keywordSearch(SEARCH_PLACE.SLEEP_CENTER, placesSearchCB);
   };
 
+  // mount 될 때만 init()을 실행시켜서 현재좌표를 보여주는 map을 띄웁니다.
   useEffect(() => {
     init();
   }, []);
-
-  useEffect(() => {
-    if (!isEventOn) {
-      return;
-    }
-    reStart();
-  }, [isEventOn]);
 
   return (
     <>
@@ -131,21 +129,25 @@ const MapContainer = ({ isEventOn, location }) => {
               }}
               variant="contained"
               onClick={() => {
-                speakDestination({ text: closestPlace.address_name });
+                reStart();
               }}
             >
               다시 듣기
             </Button>
           </ButtonContainer>
           {closestPlace && closestDistance && (
-            <MapPresenter
-              {...{ closestPlace }}
-              {...{ closestDistance }}
-              {...{ isEventOn }}
-            />
+            <MapPresenter {...{ closestPlace }} {...{ closestDistance }} />
           )}
         </Container>
-        <SpeakButton id="btn"></SpeakButton>
+        {closestPlace && (
+          <SpeakButton
+            id="btn"
+            onClick={() => {
+              console.log("버튼 이벤트 실행 ");
+              speakDestination({ init: true, text: closestPlace.address_name });
+            }}
+          ></SpeakButton>
+        )}
       </MapContainerBlock>
     </>
   );
