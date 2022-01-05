@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import color from "../common/color";
 import Text from "../common/Text";
-import Speak from "../container/Speak";
-import speakDestination from "../util/speakDestination";
 
 const KaKaoMapPresenterBlock = styled.div`
   display: flex;
@@ -25,13 +23,6 @@ const TimeText = styled.span`
 
 const KaKaoMapPresenter = ({ closestPlace, closestDistance, isEventOn }) => {
   const { place_name, address_name } = closestPlace;
-
-  useEffect(() => {
-    console.log("알림 정보 표시", isEventOn);
-    // speakDestination({
-    //   text: address_name,
-    // });
-  }, []);
 
   return (
     <KaKaoMapPresenterBlock>

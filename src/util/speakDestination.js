@@ -31,8 +31,6 @@ const speakDestination = async ({
       }
     );
 
-    console.log(data);
-    // const context = new AudioContext();
     context.decodeAudioData(data, (buffer) => {
       const source = context.createBufferSource();
       source.buffer = buffer;

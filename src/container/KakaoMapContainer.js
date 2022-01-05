@@ -8,7 +8,6 @@ import { Button } from "@mui/material";
 import displayMarker from "../util/displayMarker";
 import color from "../common/color";
 import EventListener from "./EventListener";
-import Speak from "./Speak";
 
 const KakaoMapContainer = ({ isEventOn, location }) => {
   const { kakao } = window;
@@ -65,11 +64,9 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
   }
 
   const onClickForceEvent = (place) => {
-    console.log("onClick 실행횟수");
     const context = new AudioContext();
-
     const $btn = document.getElementById("btn");
-    // speakDestination({ init: true, text: place.address_name, context });
+
     $btn.addEventListener("click", () => {
       console.log("Playback1 Play successfully");
       speakDestination({ init: true, text: place.address_name, context });
@@ -84,15 +81,12 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
   };
 
   const reStart = () => {
-    console.log("restart 시키기");
     init();
     ps.keywordSearch(SEARCH_PLACE.SLEEP_CENTER, placesSearchCB);
   };
 
   useEffect(() => {
     init();
-    const $btn = document.getElementById("btn");
-    $btn.click();
   }, []);
 
   useEffect(() => {
@@ -127,23 +121,6 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
             >
               다시 듣기
             </Button>
-            {/* {!isEventOn && (
-              <Button
-                sx={{
-                  fontSize: "2rem",
-                  fontWeight: "700",
-                  backgroundColor: `${color.darkGray}`,
-                  marginRight: "50px",
-                  borderRadius: "8px",
-                }}
-                variant="contained"
-                onClick={() => {
-                  reStart();
-                }}
-              >
-                재요청
-              </Button>
-            )} */}
           </ButtonContainer>
           {closestPlace && closestDistance && (
             <KaKaoMapPresenter
@@ -153,7 +130,7 @@ const KakaoMapContainer = ({ isEventOn, location }) => {
             />
           )}
         </Container>
-        <SpeakButton id="btn">누르면 안되는 버튼</SpeakButton>
+        <SpeakButton id="btn"></SpeakButton>
       </KakaoMapContainerBlock>
     </>
   );

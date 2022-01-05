@@ -1,4 +1,5 @@
 // source: http://yeun.github.io/open-color/
+// 필요한 컬러를 모듈화 했습니다.
 
 const color = {
   gray: {

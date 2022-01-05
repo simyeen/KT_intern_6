@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import color from "../common/color";
 
 const VedioContainer = () => {
-  let localstream;
-
   const [isVideoOn, setIsVideoOn] = useState(false);
+  let localstream;
 
   const init = () => {
     navigator.getUserMedia =
@@ -37,9 +36,11 @@ const VedioContainer = () => {
 
   const onClick = () => {
     let video = document.querySelector("video");
+
     if (!isVideoOn) {
       return;
     }
+
     video.pause();
     video.src = "";
     setIsVideoOn(false);
@@ -121,6 +122,5 @@ const VideoCotainer = styled.div`
 const ButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   padding: 16px 16px;
 `;

@@ -1,3 +1,5 @@
+// 기본적인 CSS Template으로 1.6rem의 padding 값을 가지고 있습니다.
+
 import React from "react";
 import styled, { css } from "styled-components";
 import color from "./color";

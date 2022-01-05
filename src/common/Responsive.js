@@ -1,3 +1,5 @@
+// 필요에 따라 미디워 쿼리를 적용하기 위해 Responsive Component를 생성했습니다.
+
 import React from "react";
 import styled from "styled-components";
 

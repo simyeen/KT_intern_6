@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import color from "../common/color";
 import Form from "../common/Form";
 import Text from "../common/Text";
-import EventListener from "../container/EventListener";
 import KakaoMapContainer from "../container/KakaoMapContainer";
 import VedioContainer from "../container/VedioContainer";
 
 const HomePage = () => {
-  const [isEventOn, setIsEventOn] = useState(false);
   const [location, setLocation] = useState(null);
 
   const getLocation = () => {
@@ -46,8 +43,7 @@ const HomePage = () => {
             <Text>위치정보를 얻고있습니다. 잠시만 기다려주세요!</Text>
           </LoadingContainer>
         )}
-        {location && <KakaoMapContainer {...{ isEventOn }} {...{ location }} />}
-        {/* <EventListener {...{ setIsEventOn }} {...{ isEventOn }} /> */}
+        {location && <KakaoMapContainer {...{ location }} />}
       </Container>
     </Wrapper>
   );
@@ -80,5 +76,4 @@ const Img = styled.img`
   width: 600px;
   height: 428px;
   border-radius: 15px;
-  /* background-color: ${color.white}; */
 `;
