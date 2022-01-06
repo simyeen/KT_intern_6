@@ -18,6 +18,7 @@ const MapContainer = ({ location }) => {
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState("");
   const [closestDistance, setClosestDistance] = useState("");
+  const [username, setUsername] = useState("");
 
   let current_position = { lat: location.latitude, lng: location.longitude };
   let ps = new kakao.maps.services.Places();
@@ -168,3 +169,5 @@ const ButtonContainer = styled.div``;
 const SpeakButton = styled.div`
   display: none;
 `;
+
+const Input = styled.input``;

@@ -23,6 +23,7 @@ const TimeText = styled.span`
   line-height: 1.4;
 `;
 
+// 현재 GPS 기준 가장 가까운 졸음쉼터 UI를 표시합니다.
 const MapPresenter = ({ closestPlace, closestDistance }) => {
   const { place_name, address_name } = closestPlace;
 

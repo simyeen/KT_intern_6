@@ -59,6 +59,7 @@ const Img = styled.img`
   margin-bottom: 5px;
 `;
 
+// 카테고리를 선택해서 다른 페이지로 이동할 수 있습니다.
 const Header = ({ categories, setPostList }) => {
   const [selectCategory, setSelectCategory] = useState("홈");
   const onSelect = (category) => {
