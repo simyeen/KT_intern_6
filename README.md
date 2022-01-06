@@ -8,6 +8,7 @@
 
 ## 🎯 Work Flow
 
+![work_flow](https://user-images.githubusercontent.com/60914410/148344161-60cd8ad6-6cb0-4606-a131-e27d342743a8.png)
 ### 폼보드 사진넣기
 
 ## 🛠️ 사용 기술 => 사용한 이미지들 다 모아놔서 해놓을 예정
