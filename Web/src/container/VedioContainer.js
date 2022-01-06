@@ -19,6 +19,7 @@ const VedioContainer = () => {
       navigator.mozGetUserMedia;
 
     if (navigator.getUserMedia) {
+      // 2. getUserMedia함수를 실행해서 기본값을 설정하고, video.play로 실행합니다.
       navigator.getUserMedia(
         { audio: false, video: true },
 
@@ -39,7 +40,7 @@ const VedioContainer = () => {
     }
   };
 
-  // 2. pause로 비디오 끄는 함수입니다.
+  // 3. pause로 비디오 끄는 함수입니다.
   const onStopVedio = () => {
     let video = document.querySelector("video");
 

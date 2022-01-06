@@ -18,7 +18,6 @@ const MapContainer = ({ location }) => {
   const { kakao } = window;
   const [closestPlace, setClosestPlace] = useState("");
   const [closestDistance, setClosestDistance] = useState("");
-  const [username, setUsername] = useState("");
 
   let current_position = { lat: location.latitude, lng: location.longitude };
   let ps = new kakao.maps.services.Places();
@@ -54,6 +53,7 @@ const MapContainer = ({ location }) => {
       for (let i = 0; i < data.length; i++) {
         const { y, x } = data[i];
         // 7. 위, 경도를 거리로 변환시키는 haversine 라이브러리입니다.
+        //    이때, 전방 20km 이내의 졸음 쉼터의 정보만 얻어냅니다.
         const distance = haversine(current_position, { lat: y, lng: x }) / 1000;
 
         if (distance >= RANGE.MAX) continue;
@@ -78,26 +78,13 @@ const MapContainer = ({ location }) => {
       setClosestDistance(minDistance);
       // 10. AudioContext 이벤트 같은 경우 사용자의 제스쳐가 발생해야 실행됩니다.(구글 크롬 기준)
       // 하지만, TTS를 실행시키는 부분이 센서 터치버튼이기 때문에 별도의 button 이벤트를 지정했습니다.
-      onClickForceEvent(data[minIndex]);
+      onClickForceEvent();
     }
   }
 
   // 11. 센서를 감지하면 $btn이 가르키는 버튼의 onClick 이벤트를 발생시킵니다.
-  const onClickForceEvent = (place) => {
-    const context = new AudioContext();
-    const $btn = document.getElementById("btn");
-
-    // $btn.addEventListener("click", () => {
-    //   console.log("Playback1 Play successfully");
-    // });
-
-    // $btn.addEventListener("click", function () {
-    //   context.resume().then(() => {
-    //     console.log("Playback2 resumed successfully");
-    //   });
-    // });
-
-    $btn.click();
+  const onClickForceEvent = () => {
+    document.getElementById("btn").click();
   };
 
   const reStart = () => {

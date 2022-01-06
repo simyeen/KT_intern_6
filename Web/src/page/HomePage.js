@@ -13,7 +13,7 @@ const HomePage = () => {
   // 1. html geolocation를 이용해 현재 위, 경도를 얻어냅니다.
   const getLocation = () => {
     if (navigator.geolocation) {
-      // GPS를 지원하면
+      // 2. GPS를 지원하면 location을 업데이트 합니다.
       navigator.geolocation.getCurrentPosition(
         function ({ coords }) {
           setLocation(coords);
