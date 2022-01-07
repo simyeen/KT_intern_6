@@ -1,4 +1,5 @@
-// iot Makers 플랫폼의 이벤트발생을 확인하는 EventListener Component입니다.
+// fileName : EventListener.js
+// fileFunction : iot Makers 플랫폼의 이벤트발생을 확인하는 EventListener Component입니다.
 
 import React, { useEffect } from "react";
 import axios from "axios";

@@ -1,4 +1,5 @@
-// 가장 가까운 졸음 쉼터의 팝업창의 html, css를 보여주는 Component입니다.
+// fileName : MapPresenter.js
+// fileFunction : 가장 가까운 졸음 쉼터의 팝업창의 html, css를 보여주는 Component입니다.
 
 import React from "react";
 import styled from "styled-components";

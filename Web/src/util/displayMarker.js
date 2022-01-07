@@ -1,4 +1,5 @@
-// 마커를 생성하고 지도에 표시합니다
+// fileName : displayMarker.js
+// fileFunction : 마커를 생성하고 지도에 표시합니다
 
 const { kakao } = window;
 

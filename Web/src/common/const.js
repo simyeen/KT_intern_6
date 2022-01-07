@@ -1,4 +1,5 @@
-// 필요한 상수 메세지 등을 모듈화했습니다.
+// fileName : const.js
+// fileFunction : 필요한 상수 메세지 등을 모듈화했습니다.
 
 export const SEARCH_PLACE = {
   SLEEP_CENTER: "졸음 쉼터",

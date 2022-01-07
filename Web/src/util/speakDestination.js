@@ -1,3 +1,6 @@
+// fileName : speakDestination.js
+// fileFunction : TTS API를 호출합니다.
+
 import axios from "axios";
 import { VOICE } from "../common/const";
 

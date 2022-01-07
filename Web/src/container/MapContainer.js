@@ -1,5 +1,7 @@
-// Map을 보여주는 필요한 API를 호출합니다.
-// 그리고 얻어낸 data에서 가장 가까운 졸음 쉼터를 얻어내고, 지도에 표시합니다.
+// fileName : MapContainer.js
+// fileFunction :
+// 1. Map을 보여주는 필요한 API를 호출합니다.
+// 2. 그리고 얻어낸 data에서 가장 가까운 졸음 쉼터를 얻어내고, 지도에 표시합니다.
 
 import React, { useEffect, useState } from "react";
 

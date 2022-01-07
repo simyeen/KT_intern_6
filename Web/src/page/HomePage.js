@@ -1,4 +1,5 @@
-// HomePage Component로 필요한 Container들을 import 해서 보여줍니다.
+// fileName : HomePage.js
+// fileFunction : HomePage Component로 필요한 Container들을 import 해서 보여줍니다.
 
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";

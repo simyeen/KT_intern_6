@@ -1,4 +1,5 @@
-// 필요할 때마다 Padding Component를 사용하면 적절한 여백을 넣을 수 있습니다.
+// fileName : Padding.js
+// fileFunction : 필요할 때마다 Padding Component를 사용하면 적절한 여백을 넣을 수 있습니다.
 
 import React from "react";
 import styled, { css } from "styled-components";

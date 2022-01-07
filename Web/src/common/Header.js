@@ -1,4 +1,5 @@
-// Header Component로 헤더의 html, css를 보여줍니다.
+// fileName : Header.js
+// fileFunction : Header Component로 헤더의 html, css를 보여줍니다.
 
 import React, { useState } from "react";
 import styled, { css } from "styled-components";

@@ -1,5 +1,7 @@
-// 웹 페이지 좌측에 있는 비디오를 보여주는 Vedio Component입니다.
-// 사용자는 이 화면을 통해 자신의 모습을 확인할 수 있습니다.
+// fileName : VedioContainer.js
+// fileFunction :
+// 1. 웹 페이지 좌측에 있는 비디오를 보여주는 Vedio Component입니다.
+// 2. 사용자는 이 화면을 통해 자신의 모습을 확인할 수 있습니다.
 
 import React, { useState } from "react";
 import styled from "styled-components";

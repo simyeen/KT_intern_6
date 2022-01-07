@@ -1,4 +1,5 @@
-// 상단 오른쪽의 Home menu를 보여주는 Component입니다.
+// fileName : HeaderContainer.js
+// fileFunction : 상단 오른쪽의 Home menu를 보여주는 Component입니다.
 
 import React from "react";
 import styled from "styled-components";

@@ -1,5 +1,7 @@
+// fileName : color.js
+// fileFunction : 필요한 색깔의 코드를 export 해줍니다.
+
 // source: http://yeun.github.io/open-color/
-// 필요한 컬러를 모듈화 했습니다.
 
 const color = {
   gray: {

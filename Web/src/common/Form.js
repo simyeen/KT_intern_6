@@ -1,4 +1,7 @@
-// 기본적인 CSS Template으로 1.6rem의 padding 값을 가지고 있습니다.
+// fileName : Form.js
+// fileFunction :
+// 1. 기본적인 CSS Template으로 1.6rem의 padding 값을 가지고 있습니다.
+// 2. 필요할 시 Form div를 export해서 사용합니다.
 
 import React from "react";
 import styled, { css } from "styled-components";
