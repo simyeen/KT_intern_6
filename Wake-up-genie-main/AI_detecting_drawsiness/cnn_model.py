@@ -1,4 +1,4 @@
-# file_name: knn_model.py
+# file_name: cnn_model.py
 # file_function:
 # 1. cnn 모델의 계층 구조를 정의
 # 2. 정의한 모델과 dataset을 사용해 눈의 상태(open, close)를 감지하는 모델을 학습해 모델을 저장
